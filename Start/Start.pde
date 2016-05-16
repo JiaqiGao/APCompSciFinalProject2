@@ -14,5 +14,21 @@ class Coord{
  public int getY(){
   return y; 
  }
-  
 }
+
+
+  PImage map;
+  
+  void setup(){
+    size(800,600);
+   map = loadImage("worldmap.png");
+   
+  }
+  
+  
+  void draw(){
+   image(map, 0, 0, 800, 600);
+   fill(0);
+   text(get(mouseX,mouseY),100,120);
+  }
+  
