@@ -27,7 +27,7 @@ ArrayList<Coord> GreenLand = new ArrayList<Coord>();
 ArrayList<Coord> Russia = new ArrayList<Coord>();
 ArrayList<Coord> China = new ArrayList<Coord>();
 ArrayList<Coord> Africa = new ArrayList<Coord>();
-ArrayList<Coord> Japan = new ArrayList<Coord>();
+ArrayList<Coord> East Asia = new ArrayList<Coord>();
 ArrayList<Coord> Australia = new ArrayList<Coord>();
 ArrayList<Coord> Indonesia = new ArrayList<Coord>();
 
@@ -40,6 +40,20 @@ void setup() {
   section();
 }
 
+void createRegions(){
+  Region NorthAmerica = new Region("North America", 360479324);
+  Region SouthAmerica = new Region("South America", 784247223);
+  Region Europe = new Region("Europe", 737849002);
+  Region Greenland = new Region("Greenland", 57728);
+  Region Russia = new Region("Russia", 146300000);
+  Region China = new Region("China", 1381537308);
+  Region EastAsia = new Region("East Asia", 127034536);
+  Region Africa = new Region("Africa", 1216129815);
+  Region Australia = new Region("Australia", 24168303);
+  Region Indonesia = new Region("Indonesia", 29000000);
+  
+  
+}
 
 void draw() {
   background(map);
@@ -72,7 +86,7 @@ void section() {
     } else if (pixels[i] == -16734720) {
       China.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733440) {
-      Japan.add(new Coord(i%width, i/width));
+      EastAsia.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734464) {
       Africa.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733952) {
@@ -120,10 +134,10 @@ void check() {
       text("On China", 100, 180);
     }
   }
-  for (int i = 0; i < Japan.size(); i++) {
-    if (mouseX == Japan.get(i).getX() &&
-      mouseY == Japan.get(i).getY()) {
-      text("On Japan", 100, 180);
+  for (int i = 0; i < EastAsia.size(); i++) {
+    if (mouseX == EastAsia.get(i).getX() &&
+      mouseY == EastAsia.get(i).getY()) {
+      text("On East Asia", 100, 180);
     }
   }
   for (int i = 0; i < Africa.size(); i++) {
