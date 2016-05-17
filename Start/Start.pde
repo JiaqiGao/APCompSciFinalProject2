@@ -32,9 +32,9 @@ ArrayList<Coord> Australia = new ArrayList<Coord>();
 ArrayList<Coord> Indonesia = new ArrayList<Coord>();
 
 void setup() {
-  size(800, 600);
+  size(1000, 600);
   map = loadImage("worldmap.png");
-  map.resize(800, 600);
+  map.resize(1000, 600);
   background(map);
   loadPixels();
   section();
@@ -60,25 +60,25 @@ void section() {
 
   for (int i = 0; i<pixels.length; i++) {
     if (pixels[i] == -16733696) {
-      NorthAmerica.add(new Coord(i%800, i/800));
+      NorthAmerica.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734208) {
-      SouthAmerica.add(new Coord(i%800, i/800));
+      SouthAmerica.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733184) {
-      GreenLand.add(new Coord(i%800, i/800));
+      GreenLand.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16735232) {
-      Europe.add(new Coord(i%800, i/800));
+      Europe.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734976) {
-      Russia.add(new Coord(i%800, i/800));
+      Russia.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734720) {
-      China.add(new Coord(i%800, i/800));
+      China.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733440) {
-      Japan.add(new Coord(i%800, i/800));
+      Japan.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734464) {
-      Africa.add(new Coord(i%800, i/800));
+      Africa.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733952) {
-      Indonesia.add(new Coord(i%800, i/800));
+      Indonesia.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16733184) {
-      Australia.add(new Coord(i%800, i/800));
+      Australia.add(new Coord(i%width, i/width));
     }
   }
 }
