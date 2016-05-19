@@ -79,7 +79,7 @@ void section() {
       SouthAmerica.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16732672) {
       GreenLand.add(new Coord(i%width, i/width));
-    } else if (pixels[i] == -16735232) {
+    } else if (pixels[i] == -16735232 || pixels[i] == -196610) {
       Europe.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734976) {
       Russia.add(new Coord(i%width, i/width));
@@ -89,9 +89,9 @@ void section() {
       EastAsia.add(new Coord(i%width, i/width));
     } else if (pixels[i] == -16734464) {
       Africa.add(new Coord(i%width, i/width));
-    } else if (pixels[i] == -16733952) {
+    } else if (pixels[i] == -16733952 || pixels[i] == -257) {
       Indonesia.add(new Coord(i%width, i/width));
-    } else if (pixels[i] == -16733184 || pixels[i] == -257) {
+    } else if (pixels[i] == -16733184) {
       Australia.add(new Coord(i%width, i/width));
     }
   }
