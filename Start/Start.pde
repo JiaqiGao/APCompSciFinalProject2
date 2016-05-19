@@ -18,6 +18,7 @@ class Coord {
 
 
 PImage map;
+PImage logo;
 //ArrayList for each region
 //I Don't Care about Korea
 ArrayList<Coord> Europe = new ArrayList<Coord>();
@@ -35,6 +36,8 @@ void setup() {
   size(1000, 600);
   map = loadImage("worldmap.png");
   map.resize(1000, 600);
+  logo = loadImage("sniffles.png");
+  logo.resize(100, 100);
   background(map);
   loadPixels();
   section();
@@ -58,7 +61,7 @@ void createRegions(){
 void draw() {
   background(map);
   loadPixels();
-  fill(0);
+  image(logo, 0, 500);
   text(get(mouseX, mouseY), 100, 120);
   text(pixels[width*mouseY+mouseX], 100, 160);
   check();
