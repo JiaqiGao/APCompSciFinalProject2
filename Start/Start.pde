@@ -23,9 +23,13 @@ class Coord {
 //load image
 PImage map;
 PImage logo;
+//PImage newMap;
 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
+
+//boolean change = true;
+//boolean[] window = {false,false,false,false,false,false,false,false,false,false};
 
 void setup() {
   //window size
@@ -37,12 +41,22 @@ void setup() {
   //load logo
   logo = loadImage("sniffles.png");
   logo.resize(100, 100);
+  image(logo, 0, 500);
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
-  loadPixels();
+  map.loadPixels();
   createRegions();
+  //if (change) {
+  //  Region test = world.get(0);
+  //  ArrayList hmm = test.pixel;
+  //  for (int i = 0; i<hmm.size(); i++) {
+  //    map.pixels[(int)hmm.get(i)] = color(255, 251, 126);
+  //    updatePixels();
+  //  }
+  //  change = false;
+  //}
 }
-
+//
 //assign coordinates to regions
 void createRegions() {
   //color code for each region
@@ -81,13 +95,62 @@ void createRegions() {
 }
 
 void draw() {
-  background(map);
-  loadPixels();
-  image(logo, 0, 500);
+  background(255);
+  image(map, 0, 0);
+  //image(logo, 0, 500);
   //check
+  loadPixels();
+  //int[] newColor = {255, 251, 126}; 
+  fill(0);
+  text(mouseX +"  "+ mouseY,100,100);
   text(get(mouseX, mouseY), 100, 120);
   text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
     text(place.check(), 130, 180);
+    //if(place.window){
+    // place.openWindow(); 
+    //}
+    //place.changeColor(newColor);
+  }
+  //world.get(0).openWindow();
+  //Region x = world.get(0);
+  //for (Coord pair : x.area) {
+  //  if (mouseX == pair.getX() && mouseY == pair.getY()) {
+  //    change = true;
+  //  } else {
+  //    change = false;
+  //  }
+  //}
+  //if (change) {
+  //  change = false;
+  //  x.changeColor(newColor);
+  //  image(newMap, 0, 0);
+  //}
+  
+}
+
+void mouseClicked() {
+  for (Region place : world) {
+    //for (Coord pair : place.area) {
+    //  if (mouseX == pair.getX() && mouseY == pair.getY()) {
+    //    place.openWindow();
+    //  }
+    //}
+    if(place.hovering){
+     place.clickedOn = true; 
+    }
+    if(place.clickedOn && 
+    mouseX >= 675 && mouseX <= 690 &&
+    mouseY >= 155 && mouseY <= 170){
+      place.close = true;
+    }
   }
 }
+
+//void popup(){
+// for(int i = 0; i < window.length; i++){
+//  if(window[i]){
+//   world.get(i).openWindow(); 
+//  }
+// }
+//}
