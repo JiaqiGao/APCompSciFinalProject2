@@ -1,3 +1,5 @@
+import java.util.*;
+import java.lang.*;
 
 //Class for coordinates on the map
 class Coord {
@@ -24,6 +26,15 @@ class Coord {
 PImage map;
 PImage logo;
 
+//start screen
+PImage window;
+boolean clickedOn = false;
+boolean close = false;
+
+//Infect the first person?
+boolean first = true; 
+boolean started = false;
+
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
 
@@ -41,6 +52,8 @@ void setup() {
   logo = loadImage("sniffles.png");
   logo.resize(100, 100);
   image(logo, 0, 500);
+  window = loadImage("window.png");
+  window.resize(400, 300);
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
   map.loadPixels();
@@ -49,6 +62,7 @@ void setup() {
   //timer setup
   timer.runTime();
 }
+
 
 //assign coordinates to regions
 void createRegions() {
@@ -74,6 +88,7 @@ void createRegions() {
   Region Africa = new Region("Africa", 1216129815, Af);
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
+  
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
@@ -89,6 +104,7 @@ void createRegions() {
 
 void draw() {
   background(255);
+  Bar progress = new Bar(844, 550, "World Annihilation");
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
@@ -100,7 +116,13 @@ void draw() {
   for (Region place : world) {
     text(place.check(), 130, 180);
   }
-  highlight();
+  progress.createBar();
+  if(started){
+    highlight();
+  }
+  if(started != true){
+    startScreen();
+  }
 }
 
 void highlight() {
@@ -121,7 +143,29 @@ void highlight() {
   }
 }
 
+void startScreen(){
+  window = loadImage("window.png");
+  window.resize(400, 300);
+  image(window, 300, 150);
+  startText();
+}
+
+void startText(){
+  int linespacing = 40;
+  fill(255, 102, 103);
+  textSize(20);
+  text("The Deadly Sniffle Virus", 383, 210); 
+}
+  
+  void closeWindow() {
+    if (close) {
+      clickedOn = false;
+      close = false;
+    }
+  }
+
 void mouseClicked() {
+      
   for (Region place : world) {
 
     //when the mouse is hovering over the area, and mouse is clicked
@@ -137,5 +181,10 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170) {
       place.close = true;
     }
+     if(started==false && 
+      mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170){
+        started = true;
+      }
   }
 }
