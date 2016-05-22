@@ -46,6 +46,7 @@ void setup() {
   createRegions();
 }
 
+
 //assign coordinates to regions
 void createRegions() {
   //color code for each region
@@ -70,7 +71,7 @@ void createRegions() {
   Region Africa = new Region("Africa", 1216129815, Af);
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
-  Bar Progress = new Bar(762, 577, "Progress to World Domination");
+  
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
@@ -86,6 +87,7 @@ void createRegions() {
 
 void draw() {
   background(255);
+  Bar progress = new Bar(744, 550, "World Annihilation");
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
@@ -96,6 +98,7 @@ void draw() {
   for (Region place : world) {
     text(place.check(), 130, 180);
   }
+  progress.createBar();
   highlight();
 }
 
