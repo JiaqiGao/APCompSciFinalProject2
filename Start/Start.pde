@@ -27,6 +27,9 @@ PImage logo;
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
 
+//object for timer
+Time timer = new Time();
+
 void setup() {
   //window size
   size(1000, 600);
@@ -42,6 +45,9 @@ void setup() {
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
+  
+  //timer setup
+  timer.runTime();
 }
 
 //assign coordinates to regions
@@ -86,6 +92,7 @@ void draw() {
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
+  timer.showTime();
   fill(0);
   text(mouseX +"  "+ mouseY, 100, 100);
   text(get(mouseX, mouseY), 100, 120);
