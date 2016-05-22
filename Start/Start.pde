@@ -23,13 +23,9 @@ class Coord {
 //load image
 PImage map;
 PImage logo;
-//PImage newMap;
 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
-
-//boolean change = true;
-//boolean[] window = {false,false,false,false,false,false,false,false,false,false};
 
 void setup() {
   //window size
@@ -46,17 +42,8 @@ void setup() {
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
-  //if (change) {
-  //  Region test = world.get(0);
-  //  ArrayList hmm = test.pixel;
-  //  for (int i = 0; i<hmm.size(); i++) {
-  //    map.pixels[(int)hmm.get(i)] = color(255, 251, 126);
-  //    updatePixels();
-  //  }
-  //  change = false;
-  //}
 }
-//
+
 //assign coordinates to regions
 void createRegions() {
   //color code for each region
@@ -98,78 +85,50 @@ void draw() {
   background(255);
   image(map, 0, 0);
   image(logo, 0, 500);
-  //image(logo, 0, 500);
-  //check
-  loadPixels();
-  //int[] newColor = {255, 251, 126}; 
+  loadPixels(); 
   fill(0);
-  text(mouseX +"  "+ mouseY,100,100);
+  text(mouseX +"  "+ mouseY, 100, 100);
   text(get(mouseX, mouseY), 100, 120);
   text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
-    //text(place.check(), 130, 180);
-    //if(place.window){
-    // place.openWindow(); 
-    //}
-    //place.changeColor(newColor);
+    text(place.check(), 130, 180);
   }
-  //world.get(0).openWindow();
-  //Region x = world.get(0);
-  //for (Coord pair : x.area) {
-  //  if (mouseX == pair.getX() && mouseY == pair.getY()) {
-  //    change = true;
-  //  } else {
-  //    change = false;
-  //  }
-  //}
-  //if (change) {
-  //  change = false;
-  //  x.changeColor(newColor);
-  //  image(newMap, 0, 0);
-  //}
   highlight();
 }
 
-void highlight(){
-    int hcolor=0;
-    boolean high = false;
-    if(get(mouseX, mouseY) != -1){
-      high = true;
-      hcolor = get(mouseX, mouseY);
-    }
-    if(high==true){
-      for(int i=0; i<1000; i++){
-        for(int j=0; j<600; j++){
-          if(get(i,j)==hcolor && get(i,j)<-1000000){
-            set(i,j, hcolor+500);
-          }
+void highlight() {
+  int hcolor=0;
+  boolean high = false;
+  if (get(mouseX, mouseY) != -1) {
+    high = true;
+    hcolor = get(mouseX, mouseY);
+  }
+  if (high==true) {
+    for (int i=0; i<1000; i++) {
+      for (int j=0; j<600; j++) {
+        if (get(i, j)==hcolor && get(i, j)<-1000000) {
+          set(i, j, hcolor+500);
         }
       }
     }
   }
+}
 
 void mouseClicked() {
   for (Region place : world) {
-    //for (Coord pair : place.area) {
-    //  if (mouseX == pair.getX() && mouseY == pair.getY()) {
-    //    place.openWindow();
-    //  }
-    //}
-    if(place.hovering){
-     place.clickedOn = true; 
+
+    //when the mouse is hovering over the area, and mouse is clicked
+    //set boolean clickedOn to true so that openWindow will run
+    if (place.hovering) {
+      place.clickedOn = true;
     }
-    if(place.clickedOn && 
-    mouseX >= 675 && mouseX <= 690 &&
-    mouseY >= 155 && mouseY <= 170){
+
+    //if a window is opened, and mouse is clicked on the close button
+    //window will disappear
+    if (place.clickedOn && 
+      mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170) {
       place.close = true;
     }
   }
 }
-
-//void popup(){
-// for(int i = 0; i < window.length; i++){
-//  if(window[i]){
-//   world.get(i).openWindow(); 
-//  }
-// }
-//}

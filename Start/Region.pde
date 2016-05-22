@@ -16,8 +16,8 @@ class Region {
     popDead = 0;
     popInfected = 0;
     this.colorCode = colorCode;
-    //window = loadImage("window.png");
-    //window.resize(400, 300);
+    window = loadImage("window.png");
+    window.resize(400, 300);
     //load coordinates into ArrayList if satisfied colorCode requirement
     for (int i = 0; i<map.pixels.length; i++) {
       for (int x = 0; x < colorCode.length; x++) { 
@@ -34,36 +34,12 @@ class Region {
     return name;
   }
 
-  
-  
-  //change color of the region
-  //void changeColor(int[] newColor) {
-    //for (Coord pair : area) {
-    //  if (mouseX == pair.getX() &&
-    //    mouseY == pair.getY()) {
-    //    for (int i = 0; i <pixel.size(); i++) {
-    //      map.pixels[i] = color(newColor[0], newColor[1], newColor[2]);
-    //    }
-    //  }
-    //}
-    //for (int i = 0; i < pixel.size(); i++) {
-    //  map.pixels[(int)pixel.get(i)] = color(newColor[0], newColor[1], newColor[2]);
-    //  map.updatePixels();
-    //}
-    //newMap = loadImage("worldmap.png");
-    //newMap.loadPixels();
-    //for (int i = 0; i < pixel.size(); i++) {
-    //  newMap.pixels[(int)pixel.get(i)] = color(newColor[0], newColor[1], newColor[2]);
-    //}
-    //newMap.updatePixels();
-  //}
-
   //checking if mouse on region, return region name to be printed on screen
-  /*
+  //and check if program should open/close a window
   public String check() {
-   
     openWindow();
     closeWindow();
+    //if mouse over area, make boolean hovering true
     for (Coord pair : area) {
       if (mouseX == pair.getX() &&
         mouseY == pair.getY()) {
@@ -73,29 +49,27 @@ class Region {
       hovering = false;
     }
     return "";
-    
   }
-  */
 
-  //create a window
-  /*
+  //create a window when mouse click on the area
   void openWindow() {
     if (clickedOn) {
       image(window, 300, 150);
+      //if mouse over close button, "highlight" the button
       if (mouseX >= 675 && mouseX <= 693 &&
         mouseY >= 154 && mouseY <= 170) {
         fill(37, 140, 206, 150);
         noStroke();
-        rect(675,154, 18, 17);
+        rect(675, 154, 18, 17);
       }
     }
   }
-  
+
+  //close window when close button is clicked
   void closeWindow() {
     if (close) {
       clickedOn = false;
       close = false;
     }
   }
-  */
 }
