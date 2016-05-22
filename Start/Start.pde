@@ -26,6 +26,9 @@ class Coord {
 PImage map;
 PImage logo;
 
+//Infect the first person?
+boolean first = true; 
+
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
 
@@ -87,7 +90,7 @@ void createRegions() {
 
 void draw() {
   background(255);
-  Bar progress = new Bar(744, 550, "World Annihilation");
+  Bar progress = new Bar(844, 550, "World Annihilation");
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 

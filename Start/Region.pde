@@ -81,6 +81,10 @@ class Region {
     text("Population Infected: " + newInfect, 330, 210+(2*linespacing));
     text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
     text("Population Dead: " + newDead, 330, 210+(4*linespacing));
+    if(first){
+      fill(225, 60, 49);
+      text("INFECT", 470, 215+(5*linespacing));
+    }
   }
   
   String commify(String pop){
