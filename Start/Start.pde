@@ -1,3 +1,5 @@
+import java.util.*;
+import java.lang.*;
 
 //Class for coordinates on the map
 class Coord {

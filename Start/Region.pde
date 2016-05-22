@@ -8,6 +8,7 @@ class Region {
   boolean clickedOn = false;
   boolean close = false;
   PImage window;
+  
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
     this.name = name;
@@ -55,6 +56,7 @@ class Region {
   void openWindow() {
     if (clickedOn) {
       image(window, 300, 150);
+      windowinfo();
       //if mouse over close button, "highlight" the button
       if (mouseX >= 675 && mouseX <= 693 &&
         mouseY >= 154 && mouseY <= 170) {
@@ -63,6 +65,36 @@ class Region {
         rect(675, 154, 18, 17);
       }
     }
+  }
+  
+  void windowinfo(){
+    int linespacing = 40;
+    String newPop = commify(Integer.toString(population));
+    String newInfect = commify(Integer.toString(popInfected));
+    String newAlive = commify(Integer.toString(popAlive));
+    String newDead = commify(Integer.toString(popDead));
+    fill(0, 102, 153);
+    textSize(20);
+    text(name, 475-(2.5*name.length()), 210); 
+    textSize(16);
+    text("Population: " + newPop, 330, 210+(1*linespacing));
+    text("Population Infected: " + newInfect, 330, 210+(2*linespacing));
+    text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
+    text("Population Dead: " + newDead, 330, 210+(4*linespacing));
+  }
+  
+  String commify(String pop){
+    int commacount = 0;
+    String newpop = "";
+    for(int i=pop.length()-1; i>-1; i--){
+      commacount++;
+      newpop = pop.charAt(i) + newpop;
+      if(commacount == 3 && i>0){
+        newpop = "," + newpop;
+        commacount = 0;
+      }
+    }
+    return newpop;
   }
 
   //close window when close button is clicked
