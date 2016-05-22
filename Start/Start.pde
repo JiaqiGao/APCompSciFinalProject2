@@ -97,6 +97,7 @@ void createRegions() {
 void draw() {
   background(255);
   image(map, 0, 0);
+  image(logo, 0, 500);
   //image(logo, 0, 500);
   //check
   loadPixels();
@@ -106,7 +107,7 @@ void draw() {
   text(get(mouseX, mouseY), 100, 120);
   text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
-    text(place.check(), 130, 180);
+    //text(place.check(), 130, 180);
     //if(place.window){
     // place.openWindow(); 
     //}
@@ -126,8 +127,26 @@ void draw() {
   //  x.changeColor(newColor);
   //  image(newMap, 0, 0);
   //}
-  
+  highlight();
 }
+
+void highlight(){
+    int hcolor=0;
+    boolean high = false;
+    if(get(mouseX, mouseY) != -1){
+      high = true;
+      hcolor = get(mouseX, mouseY);
+    }
+    if(high==true){
+      for(int i=0; i<1000; i++){
+        for(int j=0; j<600; j++){
+          if(get(i,j)==hcolor && get(i,j)<-1000000){
+            set(i,j, hcolor+500);
+          }
+        }
+      }
+    }
+  }
 
 void mouseClicked() {
   for (Region place : world) {
