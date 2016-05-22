@@ -70,6 +70,7 @@ void createRegions() {
   Region Africa = new Region("Africa", 1216129815, Af);
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
+  Bar Progress = new Bar(762, 577, "Progress to World Domination");
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
