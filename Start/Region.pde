@@ -2,13 +2,15 @@ class Region {
   String name;
   int[] colorCode;
   int population, popAlive, popDead, popInfected;
+  int growthFactor;
+  float E = 2.7182818284590452353602875;
   ArrayList<Coord> area = new ArrayList<Coord>();
   ArrayList pixel = new ArrayList();
   boolean hovering = false;
   boolean clickedOn = false;
   boolean close = false;
   PImage window;
-  
+
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
     this.name = name;
@@ -28,6 +30,8 @@ class Region {
         }
       }
     }
+    //random population growth
+    growthFactor = (int)(Math.random()*0.0001);
   }
 
   //return name
@@ -40,6 +44,7 @@ class Region {
   public String check() {
     openWindow();
     closeWindow();
+    //populationGrowth();
     //if mouse over area, make boolean hovering true
     for (Coord pair : area) {
       if (mouseX == pair.getX() &&
@@ -66,8 +71,8 @@ class Region {
       }
     }
   }
-  
-  void windowinfo(){
+
+  void windowinfo() {
     int linespacing = 40;
     String newPop = commify(Integer.toString(population));
     String newInfect = commify(Integer.toString(popInfected));
@@ -81,19 +86,19 @@ class Region {
     text("Population Infected: " + newInfect, 330, 210+(2*linespacing));
     text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
     text("Population Dead: " + newDead, 330, 210+(4*linespacing));
-    if(first){
+    if (first) {
       fill(225, 60, 49);
       text("INFECT", 470, 215+(5*linespacing));
     }
   }
-  
-  String commify(String pop){
+
+  String commify(String pop) {
     int commacount = 0;
     String newpop = "";
-    for(int i=pop.length()-1; i>-1; i--){
+    for (int i=pop.length()-1; i>-1; i--) {
       commacount++;
       newpop = pop.charAt(i) + newpop;
-      if(commacount == 3 && i>0){
+      if (commacount == 3 && i>0) {
         newpop = "," + newpop;
         commacount = 0;
       }
@@ -108,4 +113,11 @@ class Region {
       close = false;
     }
   }
+
+  void populationGrowth() {
+   //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
+   population += 1;
+    if(hovering){text(population,100,250);}
+  }
+  
 }

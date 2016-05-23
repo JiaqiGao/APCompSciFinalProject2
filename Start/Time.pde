@@ -14,9 +14,9 @@ class Time {
   //time in the game
   int minute;
   int hour;
-  int day;
-  int month;
-  int year;
+  int day = 1;
+  int month = 1;
+  int year = 2016;
 
   //see if clock is running
   boolean running = false;
@@ -69,4 +69,8 @@ class Time {
    }
    text(hr + " : " + min, 60,30);
   }
+}
+
+void showDate(){
+  
 }

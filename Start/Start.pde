@@ -115,6 +115,7 @@ void draw() {
   text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
     text(place.check(), 130, 180);
+    place.populationGrowth();
   }
   progress.createBar();
   if(started){
