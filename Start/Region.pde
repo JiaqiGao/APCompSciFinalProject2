@@ -131,7 +131,10 @@ class Region {
   void populationGrowth() {
    //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
    population += 1;
-    if(hovering){text(population,100,250);}
+   popAlive += 1;
+    if(hovering){
+    text(population,100,250);
+  }
   }
   
 }
