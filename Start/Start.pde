@@ -41,6 +41,8 @@ ArrayList<Region> world = new ArrayList<Region>();
 //object for timer
 Time timer = new Time();
 
+DiseaseSpread s;
+
 void setup() {
   //window size
   size(1000, 600);
@@ -58,7 +60,7 @@ void setup() {
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
-  
+
   //timer setup
   timer.runTime();
 }
@@ -88,7 +90,7 @@ void createRegions() {
   Region Africa = new Region("Africa", 1216129815, Af);
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
-  
+
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
@@ -109,6 +111,9 @@ void draw() {
   image(logo, 0, 500);
   loadPixels(); 
   timer.showTime();
+  //if(s != null){
+  //s.spread();
+  //}
   fill(0);
   text(mouseX +"  "+ mouseY, 100, 100);
   text(get(mouseX, mouseY), 100, 120);
@@ -118,10 +123,10 @@ void draw() {
     place.populationGrowth();
   }
   progress.createBar();
-  if(started){
+  if (started) {
     highlight();
   }
-  if(started != true){
+  if (started != true) {
     startScreen();
   }
 }
@@ -144,29 +149,29 @@ void highlight() {
   }
 }
 
-void startScreen(){
+void startScreen() {
   window = loadImage("window.png");
   window.resize(400, 300);
   image(window, 300, 150);
   startText();
 }
 
-void startText(){
+void startText() {
   int linespacing = 40;
   fill(255, 102, 103);
   textSize(20);
-  text("The Deadly Sniffle Virus", 383, 210); 
+  text("The Deadly Sniffle Virus", 383, 210);
 }
-  
-  void closeWindow() {
-    if (close) {
-      clickedOn = false;
-      close = false;
-    }
+
+void closeWindow() {
+  if (close) {
+    clickedOn = false;
+    close = false;
   }
+}
 
 void mouseClicked() {
-      
+
   for (Region place : world) {
 
     //when the mouse is hovering over the area, and mouse is clicked
@@ -182,10 +187,11 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170) {
       place.close = true;
     }
-     if(started==false && 
+    if (started==false && 
       mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170){
-        started = true;
-      }
+      mouseY >= 155 && mouseY <= 170) {
+      started = true;
+    }
   }
+  s = new DiseaseSpread(mouseX, mouseY);
 }
