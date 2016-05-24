@@ -1,6 +1,7 @@
 class Region {
   String name;
   int[] colorCode;
+  List<List<Integer>> coordinates = new ArrayList<List<Integer>>();
   int population, popAlive, popDead, popInfected;
   int growthFactor;
   float E = 2.7182818284590452353602875;
@@ -29,6 +30,19 @@ class Region {
           pixel.add(i);
         }
       }
+      /*
+      for(int r = 0; r<1000; r++){
+        for(int j = 0; j<600; j++){
+          for(int x : colorCode){
+            if(get(r,j) == x){
+              List<Integer> store = new ArrayList<Integer>();
+              store.add(r);
+              store.add(j);
+              coordinates.add(new ArrayList<Integer>(store));
+            }
+          }
+        }
+      }*/
     }
     //random population growth
     growthFactor = (int)(Math.random()*0.0001);
