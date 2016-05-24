@@ -1,7 +1,6 @@
 class Region {
   String name;
   int[] colorCode;
-  List<List<Integer>> coordinates = new ArrayList<List<Integer>>();
   int population, popAlive, popDead, popInfected;
   int growthFactor;
   float E = 2.7182818284590452353602875;
@@ -11,6 +10,8 @@ class Region {
   boolean clickedOn = false;
   boolean close = false;
   PImage window;
+  DiseaseSpread disease = new DiseaseSpread(area);
+  boolean startInfection;
 
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
@@ -30,19 +31,6 @@ class Region {
           pixel.add(i);
         }
       }
-      /*
-      for(int r = 0; r<1000; r++){
-        for(int j = 0; j<600; j++){
-          for(int x : colorCode){
-            if(get(r,j) == x){
-              List<Integer> store = new ArrayList<Integer>();
-              store.add(r);
-              store.add(j);
-              coordinates.add(new ArrayList<Integer>(store));
-            }
-          }
-        }
-      }*/
     }
     //random population growth
     growthFactor = (int)(Math.random()*0.0001);
@@ -58,6 +46,13 @@ class Region {
   public String check() {
     openWindow();
     closeWindow();
+    infection();
+    disease.showInfect();
+    //if(startInfection){
+    // disease.spread(); 
+    // disease.showInfect();
+    //}
+
     //populationGrowth();
     //if mouse over area, make boolean hovering true
     for (Coord pair : area) {
@@ -129,12 +124,21 @@ class Region {
   }
 
   void populationGrowth() {
-   //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
-   population += 1;
-   popAlive += 1;
-    if(hovering){
-    text(population,100,250);
+    //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
+    population += 1;
+    if (hovering) {
+      text(population, 100, 250);
+    }
   }
+
+  void infection() {
+    //also add another boolean later to make sure only start infecting
+    //when user decide to infect
+    if (clickedOn) {
+      //clickedOn = false;
+      //disease = new DiseaseSpread(mouseX,mouseY,area);
+      //startInfection = true;
+      disease.spread();
+    }
   }
-  
 }

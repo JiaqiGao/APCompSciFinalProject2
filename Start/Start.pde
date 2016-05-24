@@ -43,6 +43,7 @@ Time timer = new Time();
 
 DiseaseSpread s;
 
+
 void setup() {
   //window size
   size(1000, 600);
@@ -144,6 +145,11 @@ void draw() {
     startScreen();
   }
   //Europe.infectedToDead();
+  
+  //int x = (int)Math.random()*width;
+  //int y = (int)Math.random()*height;
+  //s.spread(x,y);
+  //s.showInfect();
 }
 
 void highlight() {
@@ -172,52 +178,52 @@ void startScreen() {
 }
 
 //<<<<<<< HEAD
-  //void startText() {
-  //int linespacing = 40;
-  //fill(255, 102, 103);
-  //textSize(20);
-  //text("The Deadly Sniffle Virus", 383, 210);
- // =======
-    void startText() {
-    int linespacing = 30;
-    fill(138, 29, 29);
-    textSize(16);
-    text("YOUR MISSION IS TO DESTROY HUMANITY.", 335, 215); 
-    fill(61, 15, 15);
-    textSize(14);
-    text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
-//    >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
-  }
+//void startText() {
+//int linespacing = 40;
+//fill(255, 102, 103);
+//textSize(20);
+//text("The Deadly Sniffle Virus", 383, 210);
+// =======
+void startText() {
+  int linespacing = 30;
+  fill(138, 29, 29);
+  textSize(16);
+  text("YOUR MISSION IS TO DESTROY HUMANITY.", 335, 215); 
+  fill(61, 15, 15);
+  textSize(14);
+  text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
+  //    >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
+}
 
-  void closeWindow() {
-    if (close) {
-      clickedOn = false;
-      close = false;
+void closeWindow() {
+  if (close) {
+    clickedOn = false;
+    close = false;
+  }
+}
+
+void mouseClicked() {
+
+  for (Region place : world) {
+
+    //when the mouse is hovering over the area, and mouse is clicked
+    //set boolean clickedOn to true so that openWindow will run
+    if (place.hovering) {
+      place.clickedOn = true;
+    }
+
+    //if a window is opened, and mouse is clicked on the close button
+    //window will disappear
+    if (place.clickedOn && 
+      mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170) {
+      place.close = true;
+    }
+    if (started==false && 
+      mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170) {
+      started = true;
     }
   }
-
-  void mouseClicked() {
-
-    for (Region place : world) {
-
-      //when the mouse is hovering over the area, and mouse is clicked
-      //set boolean clickedOn to true so that openWindow will run
-      if (place.hovering) {
-        place.clickedOn = true;
-      }
-
-      //if a window is opened, and mouse is clicked on the close button
-      //window will disappear
-      if (place.clickedOn && 
-        mouseX >= 675 && mouseX <= 690 &&
-        mouseY >= 155 && mouseY <= 170) {
-        place.close = true;
-      }
-      if (started==false && 
-        mouseX >= 675 && mouseX <= 690 &&
-        mouseY >= 155 && mouseY <= 170) {
-        started = true;
-      }
-    }
-    s = new DiseaseSpread(mouseX, mouseY);
-  }
+  //s = new DiseaseSpread(mouseX, mouseY);
+}
