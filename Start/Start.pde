@@ -60,10 +60,6 @@ void setup() {
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
-<<<<<<< HEAD
-
-=======
->>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   //timer setup
   timer.runTime();
 }
@@ -83,7 +79,7 @@ void createRegions() {
   int[] In = {-16733952, -257};
   int[] Au = {-16733184};
   //create Region
-<<<<<<< HEAD
+  //<<<<<<< HEAD
   Region NorthAmerica = new Region("North America", 360479324, NA);
   Region SouthAmerica = new Region("South America", 784247223, SA);
   Region Europe = new Region("Europe", 737849002, Eu);
@@ -95,20 +91,20 @@ void createRegions() {
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
 
-=======
-  Region NorthAmerica = new Region("North America", 360479324, NA, 5);
-  Region SouthAmerica = new Region("South America", 784247223, SA, 4);
-  Region Europe = new Region("Europe", 737849002, Eu, 5);
-  Region Greenland = new Region("Greenland", 57728, GL, 5);
-  Region Russia = new Region("Russia", 146300000, Ru, 4);
-  Region Asia = new Region("Asia", 1381537308, As, 3);
-  Region EastAsia = new Region("East Asia", 127034536, EA, 5);
-  Region Africa = new Region("Africa", 1216129815, Af, 2);
-  Region Australia = new Region("Australia", 24168303, Au, 4);
-  Region Indonesia = new Region("Indonesia", 29000000, In, 3);
-  
+  //=======
+  //Region NorthAmerica = new Region("North America", 360479324, NA, 5);
+  //Region SouthAmerica = new Region("South America", 784247223, SA, 4);
+  //Region Europe = new Region("Europe", 737849002, Eu, 5);
+  //Region Greenland = new Region("Greenland", 57728, GL, 5);
+  //Region Russia = new Region("Russia", 146300000, Ru, 4);
+  //Region Asia = new Region("Asia", 1381537308, As, 3);
+  //Region EastAsia = new Region("East Asia", 127034536, EA, 5);
+  //Region Africa = new Region("Africa", 1216129815, Af, 2);
+  //Region Australia = new Region("Australia", 24168303, Au, 4);
+  //Region Indonesia = new Region("Indonesia", 29000000, In, 3);
+
   Europe.popInfected = 10000;
->>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
+  // >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
@@ -147,7 +143,7 @@ void draw() {
   if (started != true) {
     startScreen();
   }
-  Europe.infectedToDead();
+  //Europe.infectedToDead();
 }
 
 void highlight() {
@@ -175,53 +171,53 @@ void startScreen() {
   startText();
 }
 
-<<<<<<< HEAD
-void startText() {
-  int linespacing = 40;
-  fill(255, 102, 103);
-  textSize(20);
-  text("The Deadly Sniffle Virus", 383, 210);
-=======
-void startText(){
-  int linespacing = 30;
-  fill(138,29,29);
-  textSize(16);
-  text("YOUR MISSION IS TO DESTROY HUMANITY.", 335, 215); 
-  fill(61,15,15);
-  textSize(14);
-  text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
->>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
-}
-
-void closeWindow() {
-  if (close) {
-    clickedOn = false;
-    close = false;
+//<<<<<<< HEAD
+  //void startText() {
+  //int linespacing = 40;
+  //fill(255, 102, 103);
+  //textSize(20);
+  //text("The Deadly Sniffle Virus", 383, 210);
+ // =======
+    void startText() {
+    int linespacing = 30;
+    fill(138, 29, 29);
+    textSize(16);
+    text("YOUR MISSION IS TO DESTROY HUMANITY.", 335, 215); 
+    fill(61, 15, 15);
+    textSize(14);
+    text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
+//    >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   }
-}
 
-void mouseClicked() {
-
-  for (Region place : world) {
-
-    //when the mouse is hovering over the area, and mouse is clicked
-    //set boolean clickedOn to true so that openWindow will run
-    if (place.hovering) {
-      place.clickedOn = true;
-    }
-
-    //if a window is opened, and mouse is clicked on the close button
-    //window will disappear
-    if (place.clickedOn && 
-      mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170) {
-      place.close = true;
-    }
-    if (started==false && 
-      mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170) {
-      started = true;
+  void closeWindow() {
+    if (close) {
+      clickedOn = false;
+      close = false;
     }
   }
-  s = new DiseaseSpread(mouseX, mouseY);
-}
+
+  void mouseClicked() {
+
+    for (Region place : world) {
+
+      //when the mouse is hovering over the area, and mouse is clicked
+      //set boolean clickedOn to true so that openWindow will run
+      if (place.hovering) {
+        place.clickedOn = true;
+      }
+
+      //if a window is opened, and mouse is clicked on the close button
+      //window will disappear
+      if (place.clickedOn && 
+        mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        place.close = true;
+      }
+      if (started==false && 
+        mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        started = true;
+      }
+    }
+    s = new DiseaseSpread(mouseX, mouseY);
+  }
