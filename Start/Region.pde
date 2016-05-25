@@ -1,7 +1,7 @@
 class Region {
   String name;
   int[] colorCode;
-  List<List<Integer>> coordinates = new ArrayList<List<Integer>>();
+  ArrayList<Integer> coordinates = new ArrayList<Integer>();
   int population, popAlive, popDead, popInfected;
   int growthFactor;
   float E = 2.7182818284590452353602875;
@@ -28,6 +28,7 @@ class Region {
         if (map.pixels[i] == colorCode[x]) {
           area.add(new Coord(i%width, i/width));
           pixel.add(i);
+          coordinates.add(i);
         }
       }
       /*
@@ -135,6 +136,10 @@ class Region {
     if(hovering){
     text(population,100,250);
   }
+  }
+  
+  void virus(int first){
+    System.out.println(first);
   }
   
 }

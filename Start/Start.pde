@@ -32,11 +32,12 @@ boolean clickedOn = false;
 boolean close = false;
 
 //Infect the first person?
-boolean first = true; 
+boolean first = false; 
 boolean started = false;
 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
+Region firstRegion;
 
 //object for timer
 Time timer = new Time();
@@ -195,9 +196,35 @@ void startScreen() {
       close = false;
     }
   }
-
+  
+  public Region matchRegion(int x, int y){
+    int tempColor = get(x,y);
+    for(Region r: world){
+      for(int i: r.colorCode){
+        if(tempColor == i){
+          return r;
+        }
+      }
+    }
+    return world.get(0);
+  }
+  
+  void initiateDeathSequence(){
+    //int firstPixel;
+    while(get(mouseX,mouseY) == -1){
+      firstRegion = matchRegion(mouseX, mouseY);
+    }
+    System.out.println(firstRegion);
+    first = true;
+    if(first==true){
+      //firstPixel = firstRegion.coordinates.get((int)(Math.random()*firstRegion.coordinates.size()));
+      //firstRegion.virus(firstPixel);
+      //System.out.println(firstPixel);
+      //first = false;
+    }
+  }
+    
   void mouseClicked() {
-
     for (Region place : world) {
 
       //when the mouse is hovering over the area, and mouse is clicked
@@ -220,4 +247,9 @@ void startScreen() {
       }
     }
     s = new DiseaseSpread(mouseX, mouseY);
+    /*
+    if(first == false){
+      initiateDeathSequence();
+      //System.out.println(first);
+    }*/
   }
