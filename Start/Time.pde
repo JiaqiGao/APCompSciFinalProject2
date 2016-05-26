@@ -70,7 +70,3 @@ class Time {
    text(hr + " : " + min, 60,30);
   }
 }
-
-void showDate(){
-  
-}
