@@ -1,14 +1,62 @@
 class Bar{
-  int w, l, xcor, ycor, full;
+  int xcor, ycor, full, w, l;
   String name;
+  PImage window;
+  boolean mutationWindow = false; 
   
-  public Bar(int xcor, int ycor, String name){
+  public Bar(int xcor, int ycor, String name, int w, int l){
     this.xcor = xcor;
     this.ycor = ycor;
     this.name = name;
-    w = 120;
-    l = 25;
+    this.w = w;
+    this.l = l;
     full = 110;
+    window = loadImage("window.png");
+    window.resize(400, 300);
+    mutationInfo();
+  }
+  
+  void createButton(){
+    if (mouseX >= xcor && mouseX <= xcor+w &&
+          mouseY >= ycor && mouseY <= ycor+l) {
+          fill(37, 140, 206, 150);
+          noStroke();
+          rect(xcor, ycor, w, l);
+    }else{
+      fill(197, 245, 135);
+      rect(xcor,ycor, w, l);
+      noStroke();
+    }
+    textSize(15);
+    fill(37, 14, 206, 150);
+    text(name, xcor+7, ycor+20);
+  }
+  
+  void mutationInfo(){
+   if (mouseX >= xcor && mouseX <= xcor+w &&
+          mouseY >= ycor && mouseY <= ycor+l) {
+       mutationWindow = true;
+    }
+    if(mutationWindow){
+      openWindow();
+    }
+  }
+  
+  void windowinfo(){
+    
+  }
+  
+  void openWindow() {
+    image(window, 300, 150);
+    windowinfo();
+    //if mouse over close button, "highlight" the button
+    if (mouseX >= 675 && mouseX <= 693 &&
+      mouseY >= 154 && mouseY <= 170) {
+      fill(37, 140, 206, 150);
+      noStroke();
+      rect(675, 154, 18, 17);
+    }
+    
   }
   
   void createBar(){

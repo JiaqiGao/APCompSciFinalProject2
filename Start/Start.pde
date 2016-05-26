@@ -122,7 +122,8 @@ void createRegions() {
 
 void draw() {
   background(255);
-  Bar progress = new Bar(844, 550, "World Annihilation");
+  Bar progress = new Bar(844, 550, "World Annihilation", 120, 25);
+  Bar mutations = new Bar(820, 17, "MUTATIONS", 100, 30);
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
@@ -139,6 +140,7 @@ void draw() {
     place.populationGrowth();
   }
   progress.createBar();
+  mutations.createButton();
   if (started) {
     highlight();
   }
