@@ -51,7 +51,7 @@ class Time {
     minute = (time/60) % 60;
     hour = (time/(60*60)) % 24;
   }
-  
+ 
   void showTime(){
    convert();
    fill(0);
@@ -69,4 +69,5 @@ class Time {
    }
    text(hr + " : " + min, 60,30);
   }
+  
 }

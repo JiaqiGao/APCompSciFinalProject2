@@ -96,11 +96,21 @@ class Region {
     text("Population Infected: " + newInfect, 330, 210+(2*linespacing));
     text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
     text("Population Dead: " + newDead, 330, 210+(4*linespacing));
-    if (first) {
-      fill(225, 60, 49);
-      text("INFECT", 470, 215+(5*linespacing));
-    }
+    //if (first) {
+      
+      if(infectedRegions.size() == 0){
+        fill(225, 60, 49);
+        rect(437, 398, 100, 35);
+        fill(255,255,255);
+        textSize(15);
+        text("INFECT", 463, 420);
+        infectButton = true;
+      }
+      //button for first infected victim
+      //text("INFECT", 470, 215+(5*linespacing));
+    //}
   }
+  
 
   String commify(String pop) {
     int commacount = 0;
@@ -142,6 +152,7 @@ class Region {
       disease.spread();
     }
   }
+  
 }
   //=======
   //class Region {

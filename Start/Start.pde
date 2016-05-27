@@ -32,11 +32,13 @@ boolean clickedOn = false;
 boolean close = false;
 
 //Infect the first person?
-boolean first = false; 
+boolean infectButton = false; 
 boolean started = false;
 
+Region clickRegion; 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
+ArrayList<Region> infectedRegions = new ArrayList<Region>();
 ArrayList<Bar> bars = new ArrayList<Bar>();
 Region firstRegion;
 
@@ -234,7 +236,7 @@ public Region matchRegion(int x, int y) {
   }
   return world.get(0);
 }
-
+/*
 void initiateDeathSequence() {
   //int firstPixel;
   while (get(mouseX, mouseY) == -1) {
@@ -249,7 +251,7 @@ void initiateDeathSequence() {
     //first = false;
   }
 }
-
+*/
 void mouseClicked() {
   for (Region place : world) {
 
@@ -257,7 +259,9 @@ void mouseClicked() {
     //set boolean clickedOn to true so that openWindow will run
     if (place.hovering) {
       place.clickedOn = true;
+      clickRegion = place;
     }
+  
 
     //if a window is opened, and mouse is clicked on the close button
     //window will disappear
@@ -308,7 +312,15 @@ void mouseClicked() {
       bars.get(3).mutationWindow = true;
       //bars.get(3).
     }
-    
+    //437, 398, 100, 35
+    if(infectButton && (mouseX >= 437 && mouseX <= 537 &&
+          mouseY >= 398 && mouseY <= 433)) {
+            infectedRegions.add(clickRegion);
+            System.out.println("done");
+            infectButton=false;
+            clickRegion.close = true;
+      //WAIT IM WORKING HERE
+  }
   }
   //s = new DiseaseSpread(mouseX, mouseY);
 }
