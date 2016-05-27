@@ -271,14 +271,16 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170) {
       started = true;
     }
-    if(bars.get(1).mutationWindow == true && mouseX >= 675 && mouseX <= 690 &&
+    //if click x button
+    if((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
       mouseY >= 155 && mouseY <= 170){
         bars.get(1).mutationWindow = false;
         bars.get(2).visible = false;
-        //bars.get(2).mutationWindow = false;
+        bars.get(2).mutationWindow = false;
         bars.get(3).visible = false;
-        //bars.get(3).mutationWindow = false;
+        bars.get(3).mutationWindow = false;
     }
+    //if click mutations button
     if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
           mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
       bars.get(1).mutationWindow = true;
@@ -286,12 +288,24 @@ void mouseClicked() {
       bars.get(3).visible = true;
       //bars.get(3).
     }
+    //if click resistances button 
     if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
           mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
-      bars.get(1).visible = false;
-      //bars.get(1).mutationWindow = false;
+      //bars.get(1).visible = false;
+      bars.get(1).mutationWindow = false;
       bars.get(3).visible = false;
       bars.get(2).mutationWindow = true;
+      //bars.get(3).
+    }
+    //if click symptoms button
+    if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
+          mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
+      //bars.get(1).visible = false;
+      bars.get(1).mutationWindow = false;
+      bars.get(2).visible = false;
+      //bars.get(3).visible = false;
+      bars.get(2).mutationWindow = false;
+      bars.get(3).mutationWindow = true;
       //bars.get(3).
     }
     
