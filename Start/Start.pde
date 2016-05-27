@@ -71,7 +71,7 @@ void setup() {
 
 void createBars(){
   Bar progress = new Bar(844, 550, "World Annihilation", 120, 25, true);
-  Bar mutations = new Bar(820, 17, "MUTATIONS", 100, 30, true);
+  Bar mutations = new Bar(820, 17, "Mutations", 100, 30, true);
   Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
   Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
   bars.add(progress);
@@ -275,15 +275,23 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170){
         bars.get(1).mutationWindow = false;
         bars.get(2).visible = false;
-        bars.get(2).mutationWindow = false;
+        //bars.get(2).mutationWindow = false;
         bars.get(3).visible = false;
-        bars.get(3).mutationWindow = false;
+        //bars.get(3).mutationWindow = false;
     }
     if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
           mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
       bars.get(1).mutationWindow = true;
       bars.get(2).visible = true;
       bars.get(3).visible = true;
+      //bars.get(3).
+    }
+    if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
+          mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
+      bars.get(1).visible = false;
+      //bars.get(1).mutationWindow = false;
+      bars.get(3).visible = false;
+      bars.get(2).mutationWindow = true;
       //bars.get(3).
     }
     

@@ -38,27 +38,33 @@ class Bar{
         ts = 15;
       }
       fill(37, 14, 206, 150);
-      text(name, xcor+(l/2.5)-(name.length()/2), ycor+(1.3*ts));
-      mutationInfo();
+      text(name, xcor+(l/2)-(name.length()/2), ycor+(1.3*ts));
+      mutationInfo(ts);
     }
   }
   
-  void mutationInfo(){
-    if(mutationWindow){
-     image(window, 300, 150);
-     windowinfo();
+  void mutationInfo(int ts){
+    if(visible){
+      if(mutationWindow){
+       image(window, 300, 150);
+       windowinfo(ts);
+      }
     }
   }
   
-  void windowinfo(){
-    int linespacing = 40;
-    textSize(30);
-    text("Mutations", 436, 208+(1*linespacing));
+  void windowinfo(int ts){
+    if(visible){
+      int linespacing = 40;
+      textSize(30);
+      text(name, 300+(200-((ts*name.length())/2)), 208+(.7*linespacing));
+    }
   }
   
   void openWindow() {
-    image(window, 300, 150);
-    windowinfo();
+    if(visible){
+      image(window, 300, 150);
+      //windowinfo();
+    }
     //if mouse over close button, "highlight" the button
     /*
     if (mouseX >= 675 && mouseX <= 693 &&
