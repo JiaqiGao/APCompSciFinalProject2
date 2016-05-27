@@ -37,6 +37,7 @@ boolean started = false;
 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
+ArrayList<Bar> bars = new ArrayList<Bar>();
 Region firstRegion;
 
 //object for timer
@@ -58,14 +59,26 @@ void setup() {
   image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
+  
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
+  createBars();
   //timer setup
   timer.runTime();
 }
 
+void createBars(){
+  Bar progress = new Bar(844, 550, "World Annihilation", 120, 25, true);
+  Bar mutations = new Bar(820, 17, "MUTATIONS", 100, 30, true);
+  Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
+  Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
+  bars.add(progress);
+  bars.add(mutations);
+  bars.add(resistances);
+  bars.add(symptoms);
+}
 
 //assign coordinates to regions
 void createRegions() {
@@ -122,8 +135,6 @@ void createRegions() {
 
 void draw() {
   background(255);
-  Bar progress = new Bar(844, 550, "World Annihilation", 120, 25);
-  Bar mutations = new Bar(820, 17, "MUTATIONS", 100, 30);
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
@@ -139,8 +150,12 @@ void draw() {
     text(place.check(), 130, 180);
     place.populationGrowth();
   }
-  progress.createBar();
-  mutations.createButton();
+  bars.get(0).createBar();
+  for(int i=1; i<bars.size(); i++){
+    if(bars.get(i).visible == true){
+      bars.get(i).createButton();
+    }
+  }
   if (started) {
     highlight();
   }
@@ -256,6 +271,22 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170) {
       started = true;
     }
+    if(bars.get(1).mutationWindow == true && mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170){
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        bars.get(2).mutationWindow = false;
+        bars.get(3).visible = false;
+        bars.get(3).mutationWindow = false;
+    }
+    if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
+          mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+      bars.get(1).mutationWindow = true;
+      bars.get(2).visible = true;
+      bars.get(3).visible = true;
+      //bars.get(3).
+    }
+    
   }
   //s = new DiseaseSpread(mouseX, mouseY);
 }

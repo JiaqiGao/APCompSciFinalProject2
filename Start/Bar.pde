@@ -3,59 +3,71 @@ class Bar{
   String name;
   PImage window;
   boolean mutationWindow = false; 
+  boolean visible;
   
-  public Bar(int xcor, int ycor, String name, int w, int l){
+  public Bar(int xcor, int ycor, String name, int w, int l, boolean visible){
     this.xcor = xcor;
     this.ycor = ycor;
     this.name = name;
     this.w = w;
     this.l = l;
+    this.visible = visible;
     full = 110;
     window = loadImage("window.png");
     window.resize(400, 300);
-    mutationInfo();
   }
   
   void createButton(){
-    if (mouseX >= xcor && mouseX <= xcor+w &&
-          mouseY >= ycor && mouseY <= ycor+l) {
-          fill(37, 140, 206, 150);
-          noStroke();
-          rect(xcor, ycor, w, l);
-    }else{
-      fill(197, 245, 135);
-      rect(xcor,ycor, w, l);
-      noStroke();
+    if(visible){
+      if (mouseX >= xcor && mouseX <= xcor+w &&
+            mouseY >= ycor && mouseY <= ycor+l) {
+            fill(37, 140, 206, 150);
+            noStroke();
+            rect(xcor, ycor, w, l);
+      }else{
+        fill(197, 245, 135);
+        rect(xcor,ycor, w, l);
+        noStroke();
+      }
+      int ts;
+      if(name == "Resistances" || name == "Symptoms"){
+        textSize(18);
+        ts = 18;
+      }else{
+        textSize(15);
+        ts = 15;
+      }
+      fill(37, 14, 206, 150);
+      text(name, xcor+(l/2.5)-(name.length()/2), ycor+(1.3*ts));
+      mutationInfo();
     }
-    textSize(15);
-    fill(37, 14, 206, 150);
-    text(name, xcor+7, ycor+20);
   }
   
   void mutationInfo(){
-   if (mouseX >= xcor && mouseX <= xcor+w &&
-          mouseY >= ycor && mouseY <= ycor+l) {
-       mutationWindow = true;
-    }
     if(mutationWindow){
-      openWindow();
+     image(window, 300, 150);
+     windowinfo();
     }
   }
   
   void windowinfo(){
-    
+    int linespacing = 40;
+    textSize(30);
+    text("Mutations", 436, 208+(1*linespacing));
   }
   
   void openWindow() {
     image(window, 300, 150);
     windowinfo();
     //if mouse over close button, "highlight" the button
+    /*
     if (mouseX >= 675 && mouseX <= 693 &&
       mouseY >= 154 && mouseY <= 170) {
       fill(37, 140, 206, 150);
       noStroke();
       rect(675, 154, 18, 17);
     }
+    */
     
   }
   
