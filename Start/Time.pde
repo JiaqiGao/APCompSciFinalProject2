@@ -42,8 +42,9 @@ class Time {
 
   //update actual time passed by converting millisecond to second
   //faster/slower depending on the factor
-  void getTime() {
+  int getTime() {
     time = getMilli()/1000 * factor;
+    return (int)time;
   }
   
   void convert(){

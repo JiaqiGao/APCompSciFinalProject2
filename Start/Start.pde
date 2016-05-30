@@ -120,7 +120,7 @@ void createRegions() {
   //Region Australia = new Region("Australia", 24168303, Au, 4);
   //Region Indonesia = new Region("Indonesia", 29000000, In, 3);
 
-  Europe.popInfected = 10000;
+  //Europe.popInfected = 10000;
   // >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   //add each Region to world
   world.add(NorthAmerica);
@@ -151,6 +151,7 @@ void draw() {
   for (Region place : world) {
     text(place.check(), 130, 180);
     place.populationGrowth();
+    place.spreadVirus(timer.getTime());
   }
   bars.get(0).createBar();
   for(int i=1; i<bars.size(); i++){
@@ -316,7 +317,9 @@ void mouseClicked() {
     if(infectButton && (mouseX >= 437 && mouseX <= 537 &&
           mouseY >= 398 && mouseY <= 433)) {
             infectedRegions.add(clickRegion);
-            System.out.println("done");
+            clickRegion.popInfected += 1;
+            clickRegion.startInfection = true;
+            
             infectButton=false;
             clickRegion.close = true;
       //WAIT IM WORKING HERE

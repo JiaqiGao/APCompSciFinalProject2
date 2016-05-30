@@ -2,6 +2,7 @@
 class Region {
   String name;
   int[] colorCode;
+  int startTime; 
   int population, popAlive, popDead, popInfected;
   int growthFactor;
   float E = 2.7182818284590452353602875;
@@ -111,6 +112,22 @@ class Region {
     //}
   }
   
+  void spreadVirus(int time){
+    if(startInfection){
+      startTime = time;
+      
+    if((int)(Math.random()*popInfected)+1 > (int)(Math.random()*popInfected)){
+      int selection1 = (int)Math.random()*popInfected+1;
+      popInfected += selection1;
+    }
+    if(time%5 == 0 && popInfected > 0){
+      int selection2 = (int)Math.random()*popInfected;
+      popDead += selection2;
+      popAlive -= selection2;
+      popInfected -= selection2;
+    }
+    }
+  }
 
   String commify(String pop) {
     int commacount = 0;
@@ -136,7 +153,9 @@ class Region {
 
   void populationGrowth() {
     //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
-    population += 1;
+    int selection = (int)(Math.random()*3);
+    population += selection;
+    popAlive += selection;
     if (hovering) {
       text(population, 100, 250);
     }
