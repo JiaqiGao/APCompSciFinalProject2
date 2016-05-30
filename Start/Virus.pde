@@ -1,11 +1,12 @@
 class Virus{
- Region firstVictim;
+  Region firstVictim;
   
- public Virus(Region firstVictim){
-   this.firstVictim = firstVictim; 
- }
+  public Virus(Region firstVictim){
+    this.firstVictim = firstVictim; 
+  }
   
- void infection(){
+  void infection(){
     
- }
+  }
+
 }

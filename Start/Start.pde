@@ -42,11 +42,14 @@ boolean clickedOn = false;
 boolean close = false;
 
 //Infect the first person?
-boolean first = false; 
+boolean infectButton = false; 
 boolean started = false;
 
+Region clickRegion; 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
+ArrayList<Region> infectedRegions = new ArrayList<Region>();
+ArrayList<Bar> bars = new ArrayList<Bar>();
 Region firstRegion;
 
 //object for timer
@@ -68,14 +71,26 @@ void setup() {
   image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
+  
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
   map.loadPixels();
   createRegions();
+  createBars();
   //timer setup
   timer.runTime();
 }
 
+void createBars(){
+  Bar progress = new Bar(844, 550, "World Annihilation", 120, 25, true);
+  Bar mutations = new Bar(820, 17, "Mutations", 100, 30, true);
+  Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
+  Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
+  bars.add(progress);
+  bars.add(mutations);
+  bars.add(resistances);
+  bars.add(symptoms);
+}
 
 //assign coordinates to regions
 void createRegions() {
@@ -115,7 +130,7 @@ void createRegions() {
   //Region Australia = new Region("Australia", 24168303, Au, 4);
   //Region Indonesia = new Region("Indonesia", 29000000, In, 3);
 
-  Europe.popInfected = 10000;
+  //Europe.popInfected = 10000;
   // >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   //add each Region to world
   world.add(NorthAmerica);
@@ -132,7 +147,6 @@ void createRegions() {
 
 void draw() {
   background(255);
-  Bar progress = new Bar(844, 550, "World Annihilation");
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
@@ -147,8 +161,14 @@ void draw() {
   for (Region place : world) {
     text(place.check(), 130, 180);
     place.populationGrowth();
+    place.spreadVirus(timer.getTime());
   }
-  progress.createBar();
+  bars.get(0).createBar();
+  for(int i=1; i<bars.size(); i++){
+    if(bars.get(i).visible == true){
+      bars.get(i).createButton();
+    }
+  }
   if (started) {
     highlight();
   }
@@ -227,7 +247,7 @@ public Region matchRegion(int x, int y) {
   }
   return world.get(0);
 }
-
+/*
 void initiateDeathSequence() {
   //int firstPixel;
   while (get(mouseX, mouseY) == -1) {
@@ -242,7 +262,7 @@ void initiateDeathSequence() {
     //first = false;
   }
 }
-
+*/
 void mouseClicked() {
   for (Region place : world) { //<>//
 
@@ -250,7 +270,9 @@ void mouseClicked() {
     //set boolean clickedOn to true so that openWindow will run
     if (place.hovering) {
       place.clickedOn = true;
+      clickRegion = place;
     }
+  
 
     //if a window is opened, and mouse is clicked on the close button
     //window will disappear
@@ -264,6 +286,54 @@ void mouseClicked() {
       mouseY >= 155 && mouseY <= 170) {
       started = true;
     }
+    //if click x button
+    if((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170){
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        bars.get(2).mutationWindow = false;
+        bars.get(3).visible = false;
+        bars.get(3).mutationWindow = false;
+    }
+    //if click mutations button
+    if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
+          mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+      bars.get(1).mutationWindow = true;
+      bars.get(2).visible = true;
+      bars.get(3).visible = true;
+      //bars.get(3).
+    }
+    //if click resistances button 
+    if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
+          mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
+      //bars.get(1).visible = false;
+      bars.get(1).mutationWindow = false;
+      bars.get(3).visible = false;
+      bars.get(2).mutationWindow = true;
+      //bars.get(3).
+    }
+    //if click symptoms button
+    if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
+          mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
+      //bars.get(1).visible = false;
+      bars.get(1).mutationWindow = false;
+      bars.get(2).visible = false;
+      //bars.get(3).visible = false;
+      bars.get(2).mutationWindow = false;
+      bars.get(3).mutationWindow = true;
+      //bars.get(3).
+    }
+    //437, 398, 100, 35
+    if(infectButton && (mouseX >= 437 && mouseX <= 537 &&
+          mouseY >= 398 && mouseY <= 433)) {
+            infectedRegions.add(clickRegion);
+            clickRegion.popInfected += 1;
+            clickRegion.startInfection = true;
+            
+            infectButton=false;
+            clickRegion.close = true;
+      //WAIT IM WORKING HERE
+  }
   }
   //s = new DiseaseSpread(mouseX, mouseY);
 }

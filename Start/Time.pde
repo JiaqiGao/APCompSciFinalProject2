@@ -42,8 +42,9 @@ class Time {
 
   //update actual time passed by converting millisecond to second
   //faster/slower depending on the factor
-  void getTime() {
+  int getTime() {
     time = getMilli()/1000 * factor;
+    return (int)time;
   }
   
   void convert(){
@@ -51,7 +52,7 @@ class Time {
     minute = (time/60) % 60;
     hour = (time/(60*60)) % 24;
   }
-  
+ 
   void showTime(){
    convert();
    fill(0);
@@ -69,4 +70,5 @@ class Time {
    }
    text(hr + " : " + min, 60,30);
   }
+  
 }
