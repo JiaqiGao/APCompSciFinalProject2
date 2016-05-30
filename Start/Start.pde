@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*; //<>//
 import java.lang.*;
 
 //Class for coordinates on the map
@@ -25,7 +25,7 @@ class Coord {
   public boolean equals(Coord pair) {
     if (pair.getX() == x &&
       pair.getY() == y) {
-        println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
+      println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
       return true;
     }
     return false;
@@ -55,7 +55,8 @@ Region firstRegion;
 //object for timer
 Time timer = new Time();
 
-DiseaseSpread s;
+//disease
+DiseaseSpread infection = new DiseaseSpread();
 
 
 void setup() {
@@ -71,7 +72,7 @@ void setup() {
   image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
-  
+
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
   map.loadPixels();
@@ -81,7 +82,7 @@ void setup() {
   timer.runTime();
 }
 
-void createBars(){
+void createBars() {
   Bar progress = new Bar(844, 550, "World Annihilation", 120, 25, true);
   Bar mutations = new Bar(820, 17, "Mutations", 100, 30, true);
   Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
@@ -106,7 +107,6 @@ void createRegions() {
   int[] In = {-16733952, -257};
   int[] Au = {-16733184};
   //create Region
-  //<<<<<<< HEAD
   Region NorthAmerica = new Region("North America", 360479324, NA);
   Region SouthAmerica = new Region("South America", 784247223, SA);
   Region Europe = new Region("Europe", 737849002, Eu);
@@ -118,20 +118,6 @@ void createRegions() {
   Region Australia = new Region("Australia", 24168303, Au);
   Region Indonesia = new Region("Indonesia", 29000000, In);
 
-  //=======
-  //Region NorthAmerica = new Region("North America", 360479324, NA, 5);
-  //Region SouthAmerica = new Region("South America", 784247223, SA, 4);
-  //Region Europe = new Region("Europe", 737849002, Eu, 5);
-  //Region Greenland = new Region("Greenland", 57728, GL, 5);
-  //Region Russia = new Region("Russia", 146300000, Ru, 4);
-  //Region Asia = new Region("Asia", 1381537308, As, 3);
-  //Region EastAsia = new Region("East Asia", 127034536, EA, 5);
-  //Region Africa = new Region("Africa", 1216129815, Af, 2);
-  //Region Australia = new Region("Australia", 24168303, Au, 4);
-  //Region Indonesia = new Region("Indonesia", 29000000, In, 3);
-
-  //Europe.popInfected = 10000;
-  // >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
   //add each Region to world
   world.add(NorthAmerica);
   world.add(SouthAmerica);
@@ -151,9 +137,6 @@ void draw() {
   image(logo, 0, 500);
   loadPixels(); 
   timer.showTime();
-  //if(s != null){
-  //s.spread();
-  //}
   fill(0);
   text(mouseX +"  "+ mouseY, 100, 100);
   text(get(mouseX, mouseY), 100, 130);
@@ -164,8 +147,8 @@ void draw() {
     place.spreadVirus(timer.getTime());
   }
   bars.get(0).createBar();
-  for(int i=1; i<bars.size(); i++){
-    if(bars.get(i).visible == true){
+  for (int i=1; i<bars.size(); i++) {
+    if (bars.get(i).visible == true) {
       bars.get(i).createButton();
     }
   }
@@ -175,12 +158,8 @@ void draw() {
   if (started != true) {
     startScreen();
   }
-  //Europe.infectedToDead();
-
-  //int x = (int)Math.random()*width;
-  //int y = (int)Math.random()*height;
-  //s.spread(x,y);
-  //s.showInfect();
+  
+  infection.show();
 }
 
 void highlight() {
@@ -208,13 +187,6 @@ void startScreen() {
   startText();
 }
 
-//<<<<<<< HEAD
-//void startText() {
-//int linespacing = 40;
-//fill(255, 102, 103);
-//textSize(20);
-//text("The Deadly Sniffle Virus", 383, 210);
-// =======
 void startText() {
   int linespacing = 30;
   fill(138, 29, 29);
@@ -223,7 +195,6 @@ void startText() {
   fill(61, 15, 15);
   textSize(14);
   text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
-  //    >>>>>>> bdd3558c90e4db3c48c6709b76b645e81e78f51e
 }
 
 void closeWindow() {
@@ -233,9 +204,6 @@ void closeWindow() {
   }
 }
 
-//void mouseClicked() {
-
-//  for (Region place : world) {  
 public Region matchRegion(int x, int y) {
   int tempColor = get(x, y);
   for (Region r : world) {
@@ -249,22 +217,26 @@ public Region matchRegion(int x, int y) {
 }
 /*
 void initiateDeathSequence() {
-  //int firstPixel;
-  while (get(mouseX, mouseY) == -1) {
-    firstRegion = matchRegion(mouseX, mouseY);
-  }
-  System.out.println(firstRegion);
-  first = true;
-  if (first==true) {
-    //firstPixel = firstRegion.coordinates.get((int)(Math.random()*firstRegion.coordinates.size()));
-    //firstRegion.virus(firstPixel);
-    //System.out.println(firstPixel);
-    //first = false;
-  }
-}
-*/
+ //int firstPixel;
+ while (get(mouseX, mouseY) == -1) {
+ firstRegion = matchRegion(mouseX, mouseY);
+ }
+ System.out.println(firstRegion);
+ first = true;
+ if (first==true) {
+ //firstPixel = firstRegion.coordinates.get((int)(Math.random()*firstRegion.coordinates.size()));
+ //firstRegion.virus(firstPixel);
+ //System.out.println(firstPixel);
+ //first = false;
+ }
+ }
+ */
 void mouseClicked() {
-  for (Region place : world) { //<>//
+
+  infection.infect = true;
+  infection.run();
+
+  for (Region place : world) {
 
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
@@ -272,7 +244,7 @@ void mouseClicked() {
       place.clickedOn = true;
       clickRegion = place;
     }
-  
+
 
     //if a window is opened, and mouse is clicked on the close button
     //window will disappear
@@ -287,17 +259,17 @@ void mouseClicked() {
       started = true;
     }
     //if click x button
-    if((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170){
-        bars.get(1).mutationWindow = false;
-        bars.get(2).visible = false;
-        bars.get(2).mutationWindow = false;
-        bars.get(3).visible = false;
-        bars.get(3).mutationWindow = false;
+    if ((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
+      mouseY >= 155 && mouseY <= 170) {
+      bars.get(1).mutationWindow = false;
+      bars.get(2).visible = false;
+      bars.get(2).mutationWindow = false;
+      bars.get(3).visible = false;
+      bars.get(3).mutationWindow = false;
     }
     //if click mutations button
     if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
-          mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+      mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
       bars.get(1).mutationWindow = true;
       bars.get(2).visible = true;
       bars.get(3).visible = true;
@@ -305,7 +277,7 @@ void mouseClicked() {
     }
     //if click resistances button 
     if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
-          mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
+      mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
       //bars.get(1).visible = false;
       bars.get(1).mutationWindow = false;
       bars.get(3).visible = false;
@@ -314,7 +286,7 @@ void mouseClicked() {
     }
     //if click symptoms button
     if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
-          mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
+      mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
       //bars.get(1).visible = false;
       bars.get(1).mutationWindow = false;
       bars.get(2).visible = false;
@@ -324,25 +296,15 @@ void mouseClicked() {
       //bars.get(3).
     }
     //437, 398, 100, 35
-    if(infectButton && (mouseX >= 437 && mouseX <= 537 &&
-          mouseY >= 398 && mouseY <= 433)) {
-            infectedRegions.add(clickRegion);
-            clickRegion.popInfected += 1;
-            clickRegion.startInfection = true;
-            
-            infectButton=false;
-            clickRegion.close = true;
+    if (infectButton && (mouseX >= 437 && mouseX <= 537 &&
+      mouseY >= 398 && mouseY <= 433)) {
+      infectedRegions.add(clickRegion);
+      clickRegion.popInfected += 1;
+      clickRegion.startInfection = true;
+
+      infectButton=false;
+      clickRegion.close = true;
       //WAIT IM WORKING HERE
+    }
   }
-  }
-  //s = new DiseaseSpread(mouseX, mouseY);
 }
-//=======
-//  s = new DiseaseSpread(mouseX, mouseY);
-///*
-//    if(first == false){
-// initiateDeathSequence();
-// //System.out.println(first);
-// }*/
-//}
-//>>>>>>> 0860a128eedef79686572382b76c77bee5b28b70
