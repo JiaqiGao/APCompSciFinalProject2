@@ -20,6 +20,16 @@ class Coord {
   public int getY() {
     return y;
   }
+
+  //compare two Coord objects
+  public boolean equals(Coord pair) {
+    if (pair.getX() == x &&
+      pair.getY() == y) {
+        println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
+      return true;
+    }
+    return false;
+  }
 }
 
 //load image
@@ -234,7 +244,7 @@ void initiateDeathSequence() {
 }
 
 void mouseClicked() {
-  for (Region place : world) {
+  for (Region place : world) { //<>//
 
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run

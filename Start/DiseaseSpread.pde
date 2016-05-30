@@ -27,8 +27,15 @@ class DiseaseSpread {
   void spread() {
     int fate = (int)Math.random()*countryCoord.size();
     Coord toAdd = countryCoord.get(fate);
-    if (!infectedArea.contains(toAdd)) {
-      infectedArea.add(toAdd);
+    //if (!infectedArea.contains(toAdd)) {
+    //  infectedArea.add(toAdd);
+    //}
+    boolean contains = false;
+    for(Coord infected : infectedArea){
+      contains = infected.equals(toAdd);
+    }
+    if(!contains){
+     infectedArea.add(toAdd); 
     }
     //for (int i = 0; i < infectedArea.size()-1; i++) {
     //  spread(infectedArea.get(i).getX(), infectedArea.get(i).getY());

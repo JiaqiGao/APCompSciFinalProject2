@@ -201,13 +201,22 @@ class Region {
   public String getName() {
     return name;
   }
+  
+  //check if a coord object is in area arraylist
+  public boolean has(Coord pair){
+   for(Coord current : area){
+    if(current.equals(pair)){
+     return true; 
+    }
+   }
+   return false;
+  }
 
   //checking if mouse on region, return region name to be printed on screen
   //and check if program should open/close a window
   public String check() {
     openWindow();
     closeWindow();
-    //populationGrowth();
     infection();
     disease.showInfect();
     //if mouse over area, make boolean hovering true
@@ -292,7 +301,7 @@ class Region {
     //also add another boolean later to make sure only start infecting
     //when user decide to infect
     if (clickedOn) {
-      //clickedOn = false;
+      clickedOn = false;
       //disease = new DiseaseSpread(mouseX,mouseY,area);
       //startInfection = true;
       disease.spread();
