@@ -18,6 +18,7 @@ class Region {
   int perSquare;
   //total amount of HP for the country
   int totalHP;
+  
 
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
@@ -137,10 +138,10 @@ class Region {
 
   String commify(String pop) {
     int commacount = 0;
-    String newpop = "";
+    String newpop = "";  
     for (int i=pop.length()-1; i>-1; i--) {
       commacount++;
-      newpop = pop.charAt(i) + newpop;
+      newpop = pop.charAt(i) + newpop;  
       if (commacount == 3 && i>0) {
         newpop = "," + newpop;
         commacount = 0;

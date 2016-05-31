@@ -54,9 +54,40 @@ class Bar{
   
   void windowinfo(int ts){
     if(visible){
-      int linespacing = 40;
+      int linespacing = 50;
       textSize(30);
-      text(name, 300+(200-((ts*name.length())/2)), 208+(.7*linespacing));
+      text(name, 300+(200-((ts*name.length())/2)), 236);
+      if(name.equals("Resistances")){
+        textSize(18);
+        int rectspacing = 20;
+        //air
+        fill(60,60,60);
+        text("Air", 334, 279);
+        fill(166,166,166);
+        rect(409+(0*rectspacing), 257, 10, 30);
+        rect(409+(1*rectspacing), 257, 10, 30);
+        rect(409+(2*rectspacing), 257, 10, 30);
+        rect(409+(3*rectspacing), 257, 10, 30);
+        rect(409+(4*rectspacing), 257, 10, 30);
+        //water
+        fill(60,60,160);
+        text("Water", 334, 279+linespacing);
+        fill(166,166,166);
+        rect(409+(0*rectspacing), 257+linespacing, 10, 30);
+        rect(409+(1*rectspacing), 257+linespacing, 10, 30);
+        rect(409+(2*rectspacing), 257+linespacing, 10, 30);
+        rect(409+(3*rectspacing), 257+linespacing, 10, 30);
+        rect(409+(4*rectspacing), 257+linespacing, 10, 30);
+        //heat
+        fill(160,60,60);
+        text("Heat", 334, 279+(2*linespacing));
+        fill(166,166,166);
+        rect(409+(0*rectspacing), 257+(2*linespacing), 10, 30);
+        rect(409+(1*rectspacing), 257+(2*linespacing), 10, 30);
+        rect(409+(2*rectspacing), 257+(2*linespacing), 10, 30);
+        rect(409+(3*rectspacing), 257+(2*linespacing), 10, 30);
+        rect(409+(4*rectspacing), 257+(2*linespacing), 10, 30);
+      }
     }
   }
   
