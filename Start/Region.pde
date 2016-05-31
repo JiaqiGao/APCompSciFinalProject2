@@ -12,7 +12,12 @@ class Region {
   boolean close = false;
   PImage window;
   boolean startInfection;
+  //number of location infected
   int infectionArea;
+  //population per pixel
+  int perSquare;
+  //total amount of HP for the country
+  int totalHP;
 
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
@@ -21,10 +26,12 @@ class Region {
     popAlive = population;
     popDead = 0;
     popInfected = 0;
+    //testing initial value, set HP for each person to be 10
+    totalHP = population*10;
     this.colorCode = colorCode;
     window = loadImage("window.png");
     window.resize(400, 300);
-    
+
     //load coordinates into ArrayList if satisfied colorCode requirement
     for (int i = 0; i<pixels.length; i++) {
       for (int x = 0; x < colorCode.length; x++) { 
@@ -35,7 +42,7 @@ class Region {
         }
       }
     }
-    
+
     //random population growth
     growthFactor = (int)(Math.random()*0.0001);
   }
@@ -111,22 +118,22 @@ class Region {
     }
   }
 
-  void spreadVirus(int time) {
-    if (startInfection) {
-      startTime = time;
+  //void spreadVirus(int time) {
+  //  if (startInfection) {
+  //    startTime = time;
 
-      if ((int)(Math.random()*popInfected)+1 > (int)(Math.random()*popInfected)) {
-        int selection1 = (int)Math.random()*popInfected+1;
-        popInfected += selection1;
-      }
-      if (time%5 == 0 && popInfected > 0) {
-        int selection2 = (int)Math.random()*popInfected;
-        popDead += selection2;
-        popAlive -= selection2;
-        popInfected -= selection2;
-      }
-    }
-  }
+  //    if ((int)(Math.random()*popInfected)+1 > (int)(Math.random()*popInfected)) {
+  //      int selection1 = (int)Math.random()*popInfected+1;
+  //      popInfected += selection1;
+  //    }
+  //    if (time%5 == 0 && popInfected > 0) {
+  //      int selection2 = (int)Math.random()*popInfected;
+  //      popDead += selection2;
+  //      popAlive -= selection2;
+  //      popInfected -= selection2;
+  //    }
+  //  }
+  //}
 
   String commify(String pop) {
     int commacount = 0;
@@ -150,11 +157,21 @@ class Region {
     }
   }
 
-  void populationGrowth() {
-    //population = (int)(population * Math.pow(E,(growthFactor*millis()/1000)));
+  //update the change in population 
+  void populationChange() {
+    // population = (int)(population * Math.pow(E,(growthFactor*timer.getTime()/1000)));
     int selection = (int)(Math.random()*3);
     population += selection;
     popAlive += selection;
+    //update population per pixel
+    perSquare = population/area.size();
+    //update how many people are infected
+    popInfected = perSquare * infectionArea;
+    //update how many people still alive
+    //each person has 10 HP for now
+    popAlive = totalHP / 10;
+    //update how many people dead by subtraction
+    popDead = population - popAlive;
     if (hovering) {
       text(population, 100, 250);
     }

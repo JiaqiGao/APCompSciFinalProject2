@@ -25,7 +25,6 @@ class Coord {
   public boolean equals(Coord pair) {
     if (pair.getX() == x &&
       pair.getY() == y) {
-      //   println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
       return true;
     }
     return false;
@@ -56,13 +55,9 @@ Region firstRegion;
 Time timer = new Time();
 
 //disease
-//DiseaseSpread infection = new DiseaseSpread();
 //create area of infectable
 ArrayList<Coord> infectable = new ArrayList<Coord>();
 ArrayList<Coord> infected = new ArrayList<Coord>();
-//count down to multiply disease
-//int lastTime;
-//int now;
 //ArrayList of all disease
 ArrayList<DiseaseSpread> allDisease = new ArrayList<DiseaseSpread>();
 
@@ -87,10 +82,9 @@ void setup() {
   loadPixels();
   createRegions();
   createBars();
+
   //timer setup
   timer.runTime();
-
-  //lastTime = timer.getTime();
 }
 
 void createBars() {
@@ -154,8 +148,8 @@ void draw() {
   //text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
     text(place.check(), 130, 180);
-    place.populationGrowth();
-    place.spreadVirus(timer.getTime());
+    //update population : alive, infected, dead
+    place.populationChange();
   }
   bars.get(0).createBar();
   for (int i=1; i<bars.size(); i++) {
@@ -169,13 +163,14 @@ void draw() {
   if (started != true) {
     startScreen();
   }
-  //infection
-  //now = timer.getTime();
+
+  //for each existing infection, spread accordingly
   for (DiseaseSpread infection : allDisease) {
     infection.spread();
     infection.show();
   }
-  text(allDisease.size(),100,430);
+  //showing how many different diseases exist
+  text(allDisease.size(), 100, 430);
 }
 
 void highlight() {
@@ -249,12 +244,11 @@ void initiateDeathSequence() {
  */
 void mouseClicked() {
 
-
-  //infection.run();
-  allDisease.add(new DiseaseSpread());
+  //when user click on area, infect the location and create a disease
+  //testing initial value of disease set to 2 for now
+  allDisease.add(new DiseaseSpread(2));
 
   for (Region place : world) {
-
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
     if (place.hovering) {
