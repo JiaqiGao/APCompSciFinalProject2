@@ -1,24 +1,37 @@
 class DiseaseSpread {
 
   ArrayList<Coord> infected = new ArrayList<Coord>();
-  ArrayList<Coord> infectable = new ArrayList<Coord>();
+  // ArrayList<Coord> infectable = new ArrayList<Coord>();
   boolean infect; 
-
+  ArrayList<Coord> waitingList = new ArrayList<Coord>();
   public DiseaseSpread() {
-    for (Region place : world) {
-      infectable.addAll(place.area);
-    }
     infect = false;
   }
 
   void run() {
-    if (infect) {
-      ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
-      Coord current = new Coord(mouseX, mouseY);
+    Coord current = new Coord(mouseX, mouseY);
+    ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
+    //println("new newlyInfected arraylist"+newlyInfected.size());
+    //int now = timer.getTime();
+    String c = ""+has(infectable, current)+", "+lastTime+","+now;
+    text(c, 100, 430);
+    //boolean hasNew = false;
+    if (infect && (!has(infected, current)) && has(infectable, current) ) {
       infected.add(current);
       newlyInfected.add(current);
-      spread(newlyInfected);
-      infect = false;
+      waitingList = spread(newlyInfected);
+      //println("recycled newlyInfected arraylist"+newlyInfected.size());
+    }
+    if (now - lastTime >= 2) {
+      lastTime = now;
+      waitingList = spread(waitingList);
+      // hasNew = true;
+    }
+    infect = false;
+    for(Coord pair : infected){
+     map.loadPixels();
+     map.pixels[pair.getY() * width + pair.getX()] = 0;
+     map.updatePixels();
     }
   }
 
@@ -31,7 +44,7 @@ class DiseaseSpread {
         int x = pair.getX() + shift[2*i];
         int y = pair.getY() + shift[2*i + 1];
         Coord next = new Coord(x, y);
-        if (!has(next)){
+        if (!has(infected, next) && has(infectable,next)) {
           newlyInfected.add(next);
           infected.add(next);
         }
@@ -40,18 +53,26 @@ class DiseaseSpread {
     return newlyInfected;
   }
 
+  //void multiply(ArrayList<Coord> origin) {
+  //  ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
+  //  newlyInfected = spread(origin);
+  //  if (timer.getTime() % 60 == 0) {
+  //    spread(newlyInfected);
+  //  }
+  //}
+
   //check if a coord object is in area arraylist
-  public boolean has(Coord pair) {
-    for (Coord current : infected) {
+  public boolean has(ArrayList<Coord> souce, Coord pair) {
+    for (Coord current : souce) {
       if (current.equals(pair)) {
         return true;
       }
     }
     return false;
   }
-  
-  void show(){
-    text(infected.size(),100,400);
+
+  void show() {
+    text(infected.size(), 100, 400);
   }
   //public DiseaseSpread(int x, int y, ArrayList<Coord> area) {
   //  //startPoint[0] = x;

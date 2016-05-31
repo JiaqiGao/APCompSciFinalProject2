@@ -26,10 +26,11 @@ class Region {
     window = loadImage("window.png");
     window.resize(400, 300);
     //load coordinates into ArrayList if satisfied colorCode requirement
-    for (int i = 0; i<map.pixels.length; i++) {
+    for (int i = 0; i<pixels.length; i++) {
       for (int x = 0; x < colorCode.length; x++) { 
-        if (map.pixels[i] == colorCode[x]) {
+        if (pixels[i] == colorCode[x]) {
           area.add(new Coord(i%width, i/width));
+          infectable.add(new Coord(i%width, i/width));
           pixel.add(i);
         }
       }

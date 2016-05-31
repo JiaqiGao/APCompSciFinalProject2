@@ -25,7 +25,7 @@ class Coord {
   public boolean equals(Coord pair) {
     if (pair.getX() == x &&
       pair.getY() == y) {
-      println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
+   //   println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
       return true;
     }
     return false;
@@ -57,6 +57,11 @@ Time timer = new Time();
 
 //disease
 DiseaseSpread infection = new DiseaseSpread();
+//create area of infectable
+ArrayList<Coord> infectable = new ArrayList<Coord>();
+//count down to multiply disease
+int lastTime;
+int now;
 
 
 void setup() {
@@ -76,10 +81,13 @@ void setup() {
   //create array of int for color code of each pixel
   //then assign coordinate to each region accordingly
   map.loadPixels();
+  loadPixels();
   createRegions();
   createBars();
   //timer setup
   timer.runTime();
+  
+  lastTime = timer.getTime();
 }
 
 void createBars() {
@@ -158,7 +166,9 @@ void draw() {
   if (started != true) {
     startScreen();
   }
-  
+  //infection
+  now = timer.getTime();
+  infection.run();
   infection.show();
 }
 
@@ -234,7 +244,7 @@ void initiateDeathSequence() {
 void mouseClicked() {
 
   infection.infect = true;
-  infection.run();
+  //infection.run();
 
   for (Region place : world) {
 
