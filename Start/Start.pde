@@ -25,7 +25,7 @@ class Coord {
   public boolean equals(Coord pair) {
     if (pair.getX() == x &&
       pair.getY() == y) {
-   //   println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
+      //   println("["+x+","+y+"] is equal to ["+pair.getX()+","+pair.getY()+"]");
       return true;
     }
     return false;
@@ -56,12 +56,15 @@ Region firstRegion;
 Time timer = new Time();
 
 //disease
-DiseaseSpread infection = new DiseaseSpread();
+//DiseaseSpread infection = new DiseaseSpread();
 //create area of infectable
 ArrayList<Coord> infectable = new ArrayList<Coord>();
+ArrayList<Coord> infected = new ArrayList<Coord>();
 //count down to multiply disease
-int lastTime;
-int now;
+//int lastTime;
+//int now;
+//ArrayList of all disease
+ArrayList<DiseaseSpread> allDisease = new ArrayList<DiseaseSpread>();
 
 
 void setup() {
@@ -86,8 +89,8 @@ void setup() {
   createBars();
   //timer setup
   timer.runTime();
-  
-  lastTime = timer.getTime();
+
+  //lastTime = timer.getTime();
 }
 
 void createBars() {
@@ -167,9 +170,12 @@ void draw() {
     startScreen();
   }
   //infection
-  now = timer.getTime();
-  infection.run();
-  infection.show();
+  //now = timer.getTime();
+  for (DiseaseSpread infection : allDisease) {
+    infection.spread();
+    infection.show();
+  }
+  text(allDisease.size(),100,430);
 }
 
 void highlight() {
@@ -243,8 +249,9 @@ void initiateDeathSequence() {
  */
 void mouseClicked() {
 
-  infection.infect = true;
+
   //infection.run();
+  allDisease.add(new DiseaseSpread());
 
   for (Region place : world) {
 
