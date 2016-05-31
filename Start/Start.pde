@@ -305,9 +305,11 @@ void mouseClicked() {
       bars.get(2).mutationWindow = false;
       bars.get(3).mutationWindow = true;
       //bars.get(3).
-      if(mouseX <= 409 && mouseY >= 419){
-        //nothing yet but come back here ok
-      }
+    }
+    //resistances
+    if(bars.get(2).mutationWindow && mouseX >= 409 && mouseX <= 419 && mouseY >= 257 && mouseY <= 287){
+        bars.get(2).resistances[0][0] = true;//nothing yet but come back here ok
+        System.out.println("yes");
     }
     //437, 398, 100, 35
     if (infectButton && (mouseX >= 437 && mouseX <= 537 &&
