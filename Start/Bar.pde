@@ -4,6 +4,7 @@ class Bar{
   PImage window;
   boolean mutationWindow = false; 
   boolean visible;
+  boolean[][] resistances = new boolean[3][5];
   
   public Bar(int xcor, int ycor, String name, int w, int l, boolean visible){
     this.xcor = xcor;
@@ -15,6 +16,14 @@ class Bar{
     full = 110;
     window = loadImage("window.png");
     window.resize(400, 300);
+    if(name.equals("Resistances")){
+      for(int i=0; i<resistances.length; i++){
+        for(int j=0; j<resistances[0].length; j++){
+          resistances[i][j] = false; 
+        }
+      }
+    }
+    
   }
   
   void createButton(){
@@ -64,28 +73,85 @@ class Bar{
         fill(60,60,60);
         text("Air", 334, 279);
         fill(166,166,166);
+        if(resistances[0][0]){
+          fill(166, 255, 166);
+        }
         rect(409+(0*rectspacing), 257, 10, 30);
+        fill(166,166,166);
+        if(resistances[0][1]){
+          fill(166, 255, 166);
+        }
         rect(409+(1*rectspacing), 257, 10, 30);
+        fill(166,166,166);
+        if(resistances[0][2]){
+          fill(166, 255, 166);
+        }
         rect(409+(2*rectspacing), 257, 10, 30);
+        fill(166,166,166);
+        if(resistances[0][3]){
+          fill(166, 255, 166);
+        }
         rect(409+(3*rectspacing), 257, 10, 30);
+        fill(166,166,166);
+        if(resistances[0][4]){
+          fill(166, 255, 166);
+        }
         rect(409+(4*rectspacing), 257, 10, 30);
         //water
         fill(60,60,160);
         text("Water", 334, 279+linespacing);
         fill(166,166,166);
+        if(resistances[1][0]){
+          fill(166, 255, 166);
+        }
         rect(409+(0*rectspacing), 257+linespacing, 10, 30);
+        fill(166,166,166);
+        if(resistances[1][1]){
+          fill(166, 255, 166);
+        }
         rect(409+(1*rectspacing), 257+linespacing, 10, 30);
+        fill(166,166,166);
+        if(resistances[1][2]){
+          fill(166, 255, 166);
+        }
         rect(409+(2*rectspacing), 257+linespacing, 10, 30);
+        fill(166,166,166);
+        if(resistances[1][3]){
+          fill(166, 255, 166);
+        }
         rect(409+(3*rectspacing), 257+linespacing, 10, 30);
+        fill(166,166,166);
+        if(resistances[1][4]){
+          fill(166, 255, 166);
+        }
         rect(409+(4*rectspacing), 257+linespacing, 10, 30);
         //heat
         fill(160,60,60);
         text("Heat", 334, 279+(2*linespacing));
         fill(166,166,166);
+        if(resistances[2][0]){
+          fill(166, 255, 166);
+        }
         rect(409+(0*rectspacing), 257+(2*linespacing), 10, 30);
+        fill(166,166,166);
+        if(resistances[2][1]){
+          fill(166, 255, 166);
+        }
         rect(409+(1*rectspacing), 257+(2*linespacing), 10, 30);
+        fill(166,166,166);
+        if(resistances[2][2]){
+          fill(166, 255, 166);
+        }
         rect(409+(2*rectspacing), 257+(2*linespacing), 10, 30);
+        fill(166,166,166);
+        if(resistances[2][3]){
+          fill(166, 255, 166);
+        }
         rect(409+(3*rectspacing), 257+(2*linespacing), 10, 30);
+        fill(166,166,166);
+        if(resistances[2][4]){
+          fill(166, 255, 166);
+        }
         rect(409+(4*rectspacing), 257+(2*linespacing), 10, 30);
       }
     }
