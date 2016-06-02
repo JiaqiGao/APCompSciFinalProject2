@@ -58,7 +58,7 @@ class DiseaseSpread {
         if (!has(infected, pair) && has(infectable, pair)) {
           infected.add(pair);
           //change color
-          map.pixels[pair.getY()*width + pair.getX()] = 0;
+          map.pixels[pair.getY()*width + pair.getX()] = color(255,0,0);
           //check to see which continent the infection is
           //and add to infectionArea(number of places infected)
           //and take HealPoint off
