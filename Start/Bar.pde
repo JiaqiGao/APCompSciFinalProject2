@@ -2,9 +2,11 @@ class Bar{
   int xcor, ycor, full, w, l;
   String name;
   PImage window;
+  PImage check;
   boolean mutationWindow = false; 
   boolean visible;
   boolean[][] resistances = new boolean[3][5];
+  boolean[] checks = new boolean[4];
   
   public Bar(int xcor, int ycor, String name, int w, int l, boolean visible){
     this.xcor = xcor;
@@ -16,6 +18,8 @@ class Bar{
     full = 110;
     window = loadImage("window.png");
     window.resize(400, 300);
+    check = loadImage("check.png");
+    check.resize(25, 25);
     /*
     if(name.equals("Resistances")){
       for(int i=0; i<resistances.length; i++){
@@ -67,6 +71,38 @@ class Bar{
       int linespacing = 50;
       textSize(30);
       text(name, 300+(200-((ts*name.length())/2)), 236);
+      if(name.equals("Symptoms")){
+        textSize(18);
+        int checkspacing = 36;
+        //air
+        fill(60,60,90);
+        text("Coughing", 374, 279);
+        text("Fever", 374, 279+checkspacing);
+        text("Paralysis", 374, 279+(2*checkspacing));
+        text("Amnesia", 374, 279+(3*checkspacing));
+        noFill();
+        stroke(60, 60, 90);
+        rect(344, 264, 18, 18);
+        if(checks[0]){
+          image(check, 344, 258);
+        }
+        
+        rect(344, 264+checkspacing, 18, 18);
+        if(checks[1]){
+          image(check, 344, 258+checkspacing);
+        }
+        
+        rect(344, 264+(2*checkspacing), 18, 18);
+        if(checks[2]){
+          image(check, 344, 258+(2*checkspacing));
+        }
+        
+        rect(344, 264+(3*checkspacing), 18, 18);
+        if(checks[3]){
+          image(check, 344, 258+(3*checkspacing));
+        }
+      }
+      
       if(name.equals("Resistances")){
         textSize(18);
         int rectspacing = 20;

@@ -251,7 +251,7 @@ void mouseClicked() {
   for (Region place : world) {
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
-    if (place.hovering) {
+    if (place.hovering && !bars.get(0).visible && !bars.get(1).visible && !bars.get(2).visible && !bars.get(3).visible) {
       place.clickedOn = true;
       clickRegion = place;
     }
@@ -288,13 +288,33 @@ void mouseClicked() {
     }
     //if click resistances button 
     if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
-      mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l) {
+      mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l && !bars.get(3).mutationWindow) {
       //bars.get(1).visible = false;
       bars.get(1).mutationWindow = false;
       bars.get(3).visible = false;
       bars.get(2).mutationWindow = true;
       //bars.get(3).
     }
+    
+    //checking boxes in symptoms window
+    if(bars.get(3).mutationWindow){
+      //344, 264+checkspacing
+      if(mouseX >= 344 && mouseX <= 364){
+        if(mouseY >= 264 && mouseY <= 282){
+          bars.get(3).checks[0] = true;
+        }
+        if(mouseY >= 300 && mouseY <= 318){
+          bars.get(3).checks[1] = true;
+        }
+        if(mouseY >= 336 && mouseY <= 354){
+          bars.get(3).checks[2] = true;
+        }
+        if(mouseY >= 372 && mouseY <= 390){
+          bars.get(3).checks[3] = true;
+        }
+      }
+    }
+    
     //if click symptoms button
     if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
       mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
