@@ -307,9 +307,64 @@ void mouseClicked() {
       //bars.get(3).
     }
     //resistances
-    if(bars.get(2).mutationWindow && mouseX >= 409 && mouseX <= 419 && mouseY >= 257 && mouseY <= 287){
-        bars.get(2).resistances[0][0] = true;//nothing yet but come back here ok
-        System.out.println("yes");
+    if(bars.get(2).mutationWindow){
+      //air
+      if(mouseY >= 257 && mouseY <= 287){
+        if(mouseX >= 409 && mouseX <= 419){
+          bars.get(2).resistances[0][0] = true;
+        }
+        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[0][0]){
+          bars.get(2).resistances[0][1] = true;
+        }  
+        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1]){
+          bars.get(2).resistances[0][2] = true;
+        }  
+        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2]){
+          bars.get(2).resistances[0][3] = true;
+        }  
+        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2] && bars.get(2).resistances[0][3]){
+          bars.get(2).resistances[0][4] = true;
+        }  
+      }
+        
+      //water
+      if(mouseY >= 307 && mouseY <= 337){
+        if(mouseX >= 409 && mouseX <= 419){
+          bars.get(2).resistances[1][0] = true;
+        }
+        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[1][0]){
+          bars.get(2).resistances[1][1] = true;
+        }  
+        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1]){
+          bars.get(2).resistances[1][2] = true;
+        }  
+        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2]){
+          bars.get(2).resistances[1][3] = true;
+        }  
+        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2] && bars.get(2).resistances[1][3]){
+          bars.get(2).resistances[1][4] = true;
+        }  
+      }
+      
+      //heat
+      if(mouseY >= 357 && mouseY <= 387){
+        if(mouseX >= 409 && mouseX <= 419){
+          bars.get(2).resistances[2][0] = true;
+        }
+        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[2][0]){
+          bars.get(2).resistances[2][1] = true;
+        }  
+        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1]){
+          bars.get(2).resistances[2][2] = true;
+        }  
+        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2]){
+          bars.get(2).resistances[2][3] = true;
+        }  
+        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2] && bars.get(2).resistances[2][3]){
+          bars.get(2).resistances[2][4] = true;
+        }  
+      }
+      
     }
     //437, 398, 100, 35
     if (infectButton && (mouseX >= 437 && mouseX <= 537 &&
