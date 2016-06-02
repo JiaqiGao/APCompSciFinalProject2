@@ -17,18 +17,19 @@ class Region {
   //population per pixel
   int perSquare;
   //total amount of HP for the country
-  int totalHP;
-  
+  int totalHP, HP;
+
 
   //Contructor sets variable to intial value
   public Region(String name, int population, int[] colorCode) {
     this.name = name;
     this.population = population;
-    popAlive = population;
+    popAlive = 0;
     popDead = 0;
     popInfected = 0;
     //testing initial value, set HP for each person to be 10
     totalHP = population*10;
+    HP = population * 10;
     this.colorCode = colorCode;
     window = loadImage("window.png");
     window.resize(400, 300);
@@ -163,16 +164,23 @@ class Region {
     // population = (int)(population * Math.pow(E,(growthFactor*timer.getTime()/1000)));
     int selection = (int)(Math.random()*3);
     population += selection;
-    popAlive += selection;
+    HP += selection*10;
+    totalHP += selection * 10;
+    //popAlive += selection;
+
     //update population per pixel
     perSquare = population/area.size();
+    
     //update how many people are infected
     popInfected = perSquare * infectionArea;
+    
     //update how many people still alive
     //each person has 10 HP for now
-    popAlive = totalHP / 10;
+    //popAlive = totalHP / 10;
+    
     //update how many people dead by subtraction
-    popDead = population - popAlive;
+    popDead = (HP - totalHP)/10;
+    population -= popDead;
     if (hovering) {
       text(population, 100, 250);
     }
