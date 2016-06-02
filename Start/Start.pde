@@ -251,7 +251,7 @@ void mouseClicked() {
   for (Region place : world) {
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
-    if (place.hovering && !bars.get(0).visible && !bars.get(1).visible && !bars.get(2).visible && !bars.get(3).visible) {
+    if (place.hovering && !bars.get(2).visible && !bars.get(3).visible) {
       place.clickedOn = true;
       clickRegion = place;
     }
