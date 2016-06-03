@@ -75,8 +75,10 @@ class DiseaseSpread { //<>// //<>// //<>//
           //int fate = (int)Math.random()*6;
           //for (int i = 0; i < shift.length/2; i++) {
           for (int i = 0; i < 6; i++) {
-            int randomX = (int)Math.random() * 10;
-            int randomY = (int)Math.random() * 10;
+            int randomX = (int)(Math.random() * 10);
+            println(randomX);
+            int randomY = (int)(Math.random() * 10);
+            println(randomY);
             //int x = pair.getX() + shift[2*i];
             //int y = pair.getY() + shift[2*i + 1];
             int x = pair.getX() + randomX;
