@@ -320,19 +320,19 @@ void mouseClicked() {
     if(bars.get(3).mutationWindow){
       //344, 264+checkspacing
       if(mouseX >= 344 && mouseX <= 364 && totalInfect >= symptomsCost){
-        if(mouseY >= 264 && mouseY <= 282){
+        if(!bars.get(3).checks[0] && mouseY >= 264 && mouseY <= 282){
           bars.get(3).checks[0] = true;
           totalInfect -= symptomsCost;
         }
-        if(mouseY >= 300 && mouseY <= 318){
+        if(!bars.get(3).checks[1] && mouseY >= 300 && mouseY <= 318){
           bars.get(3).checks[1] = true;
           totalInfect -= symptomsCost;
         }
-        if(mouseY >= 336 && mouseY <= 354){
+        if(!bars.get(3).checks[2] && mouseY >= 336 && mouseY <= 354){
           bars.get(3).checks[2] = true;
           totalInfect -= symptomsCost;
         }
-        if(mouseY >= 372 && mouseY <= 390){
+        if(!bars.get(3).checks[3] && mouseY >= 372 && mouseY <= 390){
           bars.get(3).checks[3] = true;
           totalInfect -= symptomsCost;
         }
@@ -354,23 +354,23 @@ void mouseClicked() {
     if(bars.get(2).mutationWindow){
       //air
       if(mouseY >= 257 && mouseY <= 287 && totalInfect >= resistanceCost){
-        if(mouseX >= 409 && mouseX <= 419){
+        if(!bars.get(2).resistances[0][0] && mouseX >= 409 && mouseX <= 419){
           bars.get(2).resistances[0][0] = true;
           totalInfect -= resistanceCost;
         }
-        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[0][0]){
+        if(!bars.get(2).resistances[0][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[0][0]){
           bars.get(2).resistances[0][1] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1]){
+        if(!bars.get(2).resistances[0][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1]){
           bars.get(2).resistances[0][2] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2]){
+        if(!bars.get(2).resistances[0][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2]){
           bars.get(2).resistances[0][3] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2] && bars.get(2).resistances[0][3]){
+        if(!bars.get(2).resistances[0][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2] && bars.get(2).resistances[0][3]){
           bars.get(2).resistances[0][4] = true;
           totalInfect -= resistanceCost;
         }  
@@ -378,23 +378,23 @@ void mouseClicked() {
         
       //water
       if(mouseY >= 307 && mouseY <= 337){
-        if(mouseX >= 409 && mouseX <= 419){
+        if(!bars.get(2).resistances[1][0] && mouseX >= 409 && mouseX <= 419){
           bars.get(2).resistances[1][0] = true;
           totalInfect -= resistanceCost;
         }
-        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[1][0]){
+        if(!bars.get(2).resistances[1][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[1][0]){
           bars.get(2).resistances[1][1] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1]){
+        if(!bars.get(2).resistances[1][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1]){
           bars.get(2).resistances[1][2] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2]){
+        if(!bars.get(2).resistances[1][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2]){
           bars.get(2).resistances[1][3] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2] && bars.get(2).resistances[1][3]){
+        if(!bars.get(2).resistances[1][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2] && bars.get(2).resistances[1][3]){
           bars.get(2).resistances[1][4] = true;
           totalInfect -= resistanceCost;
         }  
@@ -402,23 +402,23 @@ void mouseClicked() {
       
       //heat
       if(mouseY >= 357 && mouseY <= 387){
-        if(mouseX >= 409 && mouseX <= 419){
+        if(!bars.get(2).resistances[2][0] && mouseX >= 409 && mouseX <= 419){
           bars.get(2).resistances[2][0] = true;
           totalInfect -= resistanceCost;
         }
-        if(mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[2][0]){
+        if(!bars.get(2).resistances[2][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[2][0]){
           bars.get(2).resistances[2][1] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1]){
+        if(!bars.get(2).resistances[2][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1]){
           bars.get(2).resistances[2][2] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2]){
+        if(!bars.get(2).resistances[2][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2]){
           bars.get(2).resistances[2][3] = true;
           totalInfect -= resistanceCost;
         }  
-        if(mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2] && bars.get(2).resistances[2][3]){
+        if(!bars.get(2).resistances[2][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2] && bars.get(2).resistances[2][3]){
           bars.get(2).resistances[2][4] = true;
           totalInfect -= resistanceCost;
         }  
