@@ -46,9 +46,6 @@ class DiseaseSpread { //<>// //<>// //<>//
   void spread() {
     map.loadPixels();
     now = timer.getTime();
-    int[] shift = {-1, 0, 1, 0, 0, -1, 0, 1};
-    //if time to spread
-    //for now, time per round of spreading set to 2 sec
     if (now - lastTime >= 2) {
       lastTime = now;
       ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
@@ -57,10 +54,10 @@ class DiseaseSpread { //<>// //<>// //<>//
       //<<<<<<< HEAD
       for (Coord pair : waitingList) {
         if (!has(infected, pair) && has(infectable, pair)) {
-          println("able to infect this area"+pair.getX()+","+pair.getY());
+          //println("able to infect this area"+pair.getX()+","+pair.getY());
           infected.add(pair);
           //change color
-          map.pixels[pair.getY()*width + pair.getX()] = color(255, 0, 0);
+          map.pixels[pair.getY()*width + pair.getX()] = color(175, 80, 120);
           //check to see which continent the infection is
           //and add to infectionArea(number of places infected)
           //and take HealPoint off
@@ -74,14 +71,12 @@ class DiseaseSpread { //<>// //<>// //<>//
           //add to the waiting list for next round of disease spread
           //int fate = (int)Math.random()*6;
           //for (int i = 0; i < shift.length/2; i++) {
-          for (int i = 0; i < 6; i++) {
-            int randomX = (int)Math.random() * 10;
-            int randomY = (int)Math.random() * 10;
+          for (int i = 0; i < 2; i++) {
             //int x = pair.getX() + shift[2*i];
             //int y = pair.getY() + shift[2*i + 1];
-            int x = pair.getX() + randomX;
-            int y = pair.getY() + randomY;
-            println("new coordinate is"+x+","+y);
+            //int x = pair.getX() + (int)(Math.random() * 10);
+            //int y = pair.getY() + (int)(Math.random() * 10);
+            //println("new coordinate is"+x+","+y);
             //=======
             //      for (Coord pair : waitingList) {
             //        if (!has(infected, pair) && has(infectable, pair)) {
@@ -103,8 +98,8 @@ class DiseaseSpread { //<>// //<>// //<>//
             //            int x = pair.getX() + shift[2*i];
             //            int y = pair.getY() + shift[2*i + 1];
             //>>>>>>> 984aba497e676a26028cbcb5e0f67525fe0d3c22
-            Coord next = new Coord(x, y);
-            newlyInfected.add(next);
+            //Coord next = new Coord(pair.getX() + (int)(Math.random() * 10), pair.getY() + (int)(Math.random() * 10));
+            newlyInfected.add(new Coord(pair.getX() + (int)(Math.random() * 10)-5, pair.getY() + (int)(Math.random() * 10)-5));
           }
         }
       }

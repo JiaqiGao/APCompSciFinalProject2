@@ -1,4 +1,4 @@
-import java.util.*; //<>//
+import java.util.*; //<>// //<>//
 import java.lang.*;
 
 //Class for coordinates on the map
@@ -176,7 +176,7 @@ void draw() {
     infection.show();
   }
   //showing how many different diseases exist
-  text(allDisease.size(), 100, 430);
+  //text(allDisease.size(), 100, 430);
 }
 
 void highlight() {
@@ -202,10 +202,10 @@ void showInfectPoints(){
   fill(45, 152, 175);
   //int temp = totalInfect;
   for(Region r: world){
-    if(r.popInfected < 10){
-      totalInfect += r.popInfected;
+    if(r.popInfected < 20){
+      totalInfect += r.popInfected%10;
     }else{
-      totalInfect += r.popInfected % 10;
+      totalInfect += r.popInfected%2;     
     }
   }
   text("XP: "+ totalInfect, 650, 550); 
