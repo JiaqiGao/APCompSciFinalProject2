@@ -43,9 +43,9 @@ class DiseaseSpread { //<>// //<>// //<>//
           infected.add(pair);
           //change color
           map.pixels[pair.getY()*width + pair.getX()] = color(spreadColor[0], spreadColor[1], spreadColor[2]);
-          if(spreadColor[0] < 240 && (int)(Math.random()*5)==3){
+          if(spreadColor[0] < 240 && (int)(Math.random()*20)==3){
             spreadColor[0]++; 
-            if(spreadColor[1] < 100 && (int)(Math.random()*5)==2){
+            if(spreadColor[1] < 50){
               spreadColor[1]++;
               spreadColor[2]++;
             }
