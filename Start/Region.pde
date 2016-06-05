@@ -2,7 +2,7 @@ class Region {
   String name;
   int[] colorCode;
   int startTime; 
-  int population, popAlive, popDead, popInfected;
+  int population, popDead, popInfected;
   int growthFactor;
   ArrayList<Coord> area = new ArrayList<Coord>();
   ArrayList pixel = new ArrayList();
@@ -10,7 +10,7 @@ class Region {
   boolean clickedOn = false;
   boolean close = false;
   PImage window;
-  boolean startInfection;
+  boolean startInfection = false;
   //number of location infected
   int infectionArea;
   //population per pixel
@@ -23,7 +23,6 @@ class Region {
   public Region(String name, int population, int[] colorCode) {
     this.name = name;
     this.population = population;
-    popAlive = 0;
     popDead = 0;
     popInfected = 0;
     //testing initial value, set HP for each person to be 10
@@ -82,7 +81,10 @@ class Region {
 
   //create a window when mouse click on the area
   void openWindow() {
-    if (clickedOn) {
+    //if(startInfection){
+    //  //startInfection = false;
+    //}else 
+    if (clickedOn && !select) {
       image(window, 300, 150);
       windowinfo();
       //if mouse over close button, "highlight" the button
@@ -99,7 +101,7 @@ class Region {
     int linespacing = 40;
     String newPop = commify(Integer.toString(population));
     String newInfect = commify(Integer.toString(popInfected));
-    String newAlive = commify(Integer.toString(popAlive));
+    //String newAlive = commify(Integer.toString(popAlive));
     String newDead = commify(Integer.toString(popDead));
     fill(0, 102, 153);
     textSize(20);
@@ -107,8 +109,8 @@ class Region {
     textSize(16);
     text("Population: " + newPop, 330, 210+(1*linespacing));
     text("Population Infected: " + newInfect, 330, 210+(2*linespacing));
-    text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
-    text("Population Dead: " + newDead, 330, 210+(4*linespacing));
+    //text("Population Alive: " + newAlive, 330, 210+(3*linespacing));
+    text("Population Dead: " + newDead, 330, 210+(3*linespacing));
     //if (first) {
 
     if (openingGift || totalInfect >= 1100) {
