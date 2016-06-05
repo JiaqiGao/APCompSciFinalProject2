@@ -309,7 +309,7 @@ void mouseClicked() {
   //when user click on area, infect the location and create a disease
   //testing initial value of disease set to 2 for now
   if (infectButton) {
-    allDisease.add(new DiseaseSpread(2));
+    allDisease.add(new DiseaseSpread(1));
   }
 
   for (Region place : world) {

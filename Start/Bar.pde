@@ -242,17 +242,13 @@ class Bar{
   //calculates progress and changes length of progress bar
   float deadCalc(){
     int dead = 0;
-    int infected = 0;
     int worldPop = 0;
     for(Region r : world){
       dead += r.popDead;
-      infected += r.popInfected;
       worldPop += r.population; 
     }
-    //test
-    dead = 10000;
-    infected = 152222222;
-    return (float)((float)(dead + (float)(infected/2))/worldPop)*full;
+
+    return ((dead + totalInfect)/worldPop)*full;
   }
   
 }
