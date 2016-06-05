@@ -41,6 +41,19 @@ class Coord {
    }
    return countryName;
   }
+  
+  public Region getRegion(){
+    Region r = world.get(0);
+   //String countryName = "";
+   for(Region place : world){
+     if(place.has(new Coord(x,y))){
+      //countryName = place.getName();
+      r = place;
+      break;
+     }
+   }
+   return r;
+  }
 }
 
 //load image
@@ -87,14 +100,15 @@ String currentCountry = "";
 void setup() {
   //window size
   size(1000, 600);
+  frameRate(60);
   //load map as background
   map = loadImage("worldmap.png");
   map.resize(1000, 600);
   background(map);
   //load logo
-  logo = loadImage("sniffles.png");
-  logo.resize(100, 100);
-  image(logo, 0, 500);
+  //logo = loadImage("sniffles.png");
+  //logo.resize(100, 100);
+  //image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
 
@@ -159,18 +173,19 @@ void createRegions() {
 }
 
 void draw() {
-  background(255);
+  //background(255);
   image(map, 0, 0);
-  image(logo, 0, 500);
+  //image(logo, 0, 500);
   loadPixels(); 
   showInfectPoints();
   timer.showTime();
-  fill(0);
-  text(mouseX +"  "+ mouseY, 100, 100);
-  text(get(mouseX, mouseY), 100, 130);
+  //fill(0);
+  //text(mouseX +"  "+ mouseY, 100, 100);
+  //text(get(mouseX, mouseY), 100, 130);
   //text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
-    text(place.check(), 130, 180);
+    place.check();
+    //text(place.check(), 130, 180);
     //update population : alive, infected, dead
     place.populationChange();
   }
@@ -193,7 +208,7 @@ void draw() {
     infection.show();
   }
   //showing how many different diseases exist
-  text(allDisease.size(), 100, 430);
+  //text(allDisease.size(), 100, 430);
 }
 
 void highlight() {
