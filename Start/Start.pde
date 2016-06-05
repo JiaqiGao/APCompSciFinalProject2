@@ -316,7 +316,7 @@ void initiateDeathSequence() {
 void mouseClicked() {
   
   if(select){
-   allDisease.add(new DiseaseSpread(100));
+   allDisease.add(new DiseaseSpread(1));
    select = false;
   }
 
