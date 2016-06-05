@@ -114,8 +114,8 @@ void setup() {
   map.resize(1000, 600);
   background(map);
   //load logo
-  //logo = loadImage("sniffles.png");
-  //logo.resize(100, 100);
+  logo = loadImage("sniffles.png");
+  logo.resize(100, 100);
   //image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
@@ -183,13 +183,13 @@ void createRegions() {
 void draw() {
   //background(255);
   image(map, 0, 0);
-  //image(logo, 0, 500);
+  image(logo, 0, 500);
   loadPixels(); 
   showInfectPoints();
   timer.showTime();
   //fill(0);
   //text(mouseX +"  "+ mouseY, 100, 100);
-  //text(get(mouseX, mouseY), 100, 130);
+  text(get(mouseX, mouseY), 100, 130);
   //text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
     place.check();

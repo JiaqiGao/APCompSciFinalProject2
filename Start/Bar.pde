@@ -241,14 +241,25 @@ class Bar{
   
   //calculates progress and changes length of progress bar
   float deadCalc(){
-    int dead = 0;
-    int worldPop = 0;
-    for(Region r : world){
-      dead += r.popDead;
-      worldPop += r.population; 
+    
+    float green = 0;
+    float totalInfectCopy = totalInfect;
+    //int red = 0;
+    while(totalInfectCopy > 0){
+      green+=0.1;
+      totalInfectCopy -= 1000000;
     }
-
-    return ((dead + totalInfect)/worldPop)*full;
+    /*
+    for(int i=0; i<1000; i++){
+      for(int j=0; j<800; j++){
+        if(get(i,j) < -7000000 && get(i,j) > -16000000){
+          red++;
+        }
+        
+      }
+    }
+    */
+    return ((green)+0.01)*full;
   }
   
 }
