@@ -18,35 +18,9 @@ class DiseaseSpread { //<>// //<>// //<>//
     this.damage = damage;
   }
 
-  //void run() {
-  //  Coord current = new Coord(mouseX, mouseY);
-  //  ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
-  //  String c = ""+has(infectable, current)+", "+lastTime+","+now;
-  //  text(c, 100, 430);
-  //  //infect
-  //  if ((!has(infected, current)) && has(infectable, current) ) {
-  //    infected.add(current);
-  //    newlyInfected.add(current);
-  //    waitingList = spread(newlyInfected);
-  //  }
-  //  if (now - lastTime >= 2) {
-  //    lastTime = now;
-  //    waitingList = spread(waitingList);
-  //    // hasNew = true;
-  //  }
-  // // infect = false;
-  //  for (Coord pair : infected) {
-  //    map.loadPixels();
-  //    map.pixels[pair.getY() * width + pair.getX()] = 0;
-  //    map.updatePixels();
-  //  }
-  //}
-
-
   void spread() {
     map.loadPixels();
     now = timer.getTime();
-    int[] shift = {-1, 0, 1, 0, 0, -1, 0, 1};
     //if time to spread
     //for now, time per round of spreading set to 2 sec
     if (now - lastTime >= 2) {
@@ -54,13 +28,14 @@ class DiseaseSpread { //<>// //<>// //<>//
       ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
       //for each coordinate pairs in waiting list
       //check if they're on the map, and not yet infected
-      //<<<<<<< HEAD
       for (Coord pair : waitingList) {
-        if (!has(infected, pair) && has(infectable, pair)) {
-          println("able to infect this area"+pair.getX()+","+pair.getY());
+        if (!has(infected, pair) && (pair.getCountry().length() != 0)) {
+         // println("able to infect "+ pair.getX()+","+pair.getY()+" on "+pair.getCountry());
           infected.add(pair);
           //change color
           map.pixels[pair.getY()*width + pair.getX()] = color(255, 0, 0);
+          //add to point system
+          totalInfect ++;
           //check to see which continent the infection is
           //and add to infectionArea(number of places infected)
           //and take HealPoint off
@@ -76,41 +51,26 @@ class DiseaseSpread { //<>// //<>// //<>//
           //for (int i = 0; i < shift.length/2; i++) {
           for (int i = 0; i < 6; i++) {
             int randomX = (int)(Math.random() * 10);
-            println(randomX);
             int randomY = (int)(Math.random() * 10);
-            println(randomY);
+
             //int x = pair.getX() + shift[2*i];
             //int y = pair.getY() + shift[2*i + 1];
             int x = pair.getX() + randomX;
             int y = pair.getY() + randomY;
-            println("new coordinate is"+x+","+y);
-            //=======
-            //      for (Coord pair : waitingList) {
-            //        if (!has(infected, pair) && has(infectable, pair)) {
-            //          infected.add(pair);
-            //          //change color
-            //          map.pixels[pair.getY()*width + pair.getX()] = 0;
-            //          //check to see which continent the infection is
-            //          //and add to infectionArea(number of places infected)
-            //          //and take HealPoint off
-            //          for(Region place : world){
-            //           if(place.has(pair)){
-            //            place.infectionArea++; 
-            //            place.totalHP = place.totalHP - damage;
-            //           }
-            //          }
-            //          //add location up,down,left,right to the coordinate pair
-            //          //add to the waiting list for next round of disease spread
-            //          for (int i = 0; i < shift.length/2; i++) {
-            //            int x = pair.getX() + shift[2*i];
-            //            int y = pair.getY() + shift[2*i + 1];
-            //>>>>>>> 984aba497e676a26028cbcb5e0f67525fe0d3c22
             Coord next = new Coord(x, y);
             newlyInfected.add(next);
           }
         }
       }
-      waitingList = newlyInfected;
+      //limit the size of area to be infected
+      if (newlyInfected.size() < 500) {
+        waitingList = newlyInfected;
+      } else {
+        waitingList.clear();
+        for (int i = 0; i < newlyInfected.size()/10; i++) {
+          waitingList.add(newlyInfected.get(i));
+        }
+      }
     }
     //update to change color on map
     map.updatePixels();

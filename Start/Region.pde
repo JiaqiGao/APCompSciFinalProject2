@@ -4,7 +4,6 @@ class Region {
   int startTime; 
   int population, popAlive, popDead, popInfected;
   int growthFactor;
-  float E = 2.7182818284590452353602875;
   ArrayList<Coord> area = new ArrayList<Coord>();
   ArrayList pixel = new ArrayList();
   boolean hovering = false;
@@ -72,9 +71,11 @@ class Region {
     Coord current = new Coord(mouseX, mouseY);
     if (has(current)) {
       hovering = true;
-      return name +"infection area "+infectionArea;
+      currentCountry = getName();
+      return currentCountry +" infection area "+infectionArea;
     } else {
       hovering = false;
+      currentCountry = "";
     }
     return "";
   }
@@ -110,13 +111,20 @@ class Region {
     text("Population Dead: " + newDead, 330, 210+(4*linespacing));
     //if (first) {
 
-    if (infectedRegions.size() == 0) {
+    if (openingGift || totalInfect >= 1100) {
       fill(225, 60, 49);
       rect(437, 398, 100, 35);
       fill(255, 255, 255);
       textSize(15);
       text("INFECT", 463, 420);
       infectButton = true;
+    }else{
+      fill(203, 203, 203);
+      rect(439, 398, 120, 35);
+      fill(0, 0, 0);
+      textSize(10);
+      text("NOT ENOUGH POINTS", 445, 420);
+      infectButton = false;
     }
   }
 
