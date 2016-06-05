@@ -11,12 +11,20 @@ class DiseaseSpread { //<>// //<>// //<>//
   //timer for when to spread disease
   int lastTime;
   int now;
+  //which country the infection is in
+  Region country;
 
   public DiseaseSpread(int damage) {
     //next position to infect in where the user picks
-    waitingList.add(new Coord(mouseX, mouseY));
+    Coord pair = new Coord(mouseX,mouseY);
+    waitingList.add(pair);
     lastTime = timer.getTime();
     this.damage = damage;
+    for(Region place : world){
+     if(place.has(pair)){
+      country = place; 
+     }
+    }
   }
 
   void spread() {
@@ -24,7 +32,7 @@ class DiseaseSpread { //<>// //<>// //<>//
     now = timer.getTime();
     //if time to spread
     //for now, time per round of spreading set to 2 sec
-    if (now - lastTime >= 2) {
+    if (now - lastTime >= 2 && (country.population >0)) {
       lastTime = now;
       ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
       //for each coordinate pairs in waiting list

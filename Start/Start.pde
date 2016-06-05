@@ -316,7 +316,7 @@ void initiateDeathSequence() {
 void mouseClicked() {
   
   if(select){
-   allDisease.add(new DiseaseSpread(1));
+   allDisease.add(new DiseaseSpread(100));
    select = false;
   }
 
@@ -489,7 +489,6 @@ void mouseClicked() {
          totalInfect -= 1000; 
         }
         infectButton=false;
-        //clickRegion.close = true;
         select = true;
         //WAIT IM WORKING HERE
       }

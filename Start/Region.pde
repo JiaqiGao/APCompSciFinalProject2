@@ -16,7 +16,11 @@ class Region {
   //population per pixel
   int perSquare;
   //total amount of HP for the country
-  int totalHP, HP;
+  long totalHP, HP;
+
+  //timer for when to increase pop
+  int lastTime;
+  int now;
 
 
   //Contructor sets variable to intial value
@@ -26,12 +30,13 @@ class Region {
     popDead = 0;
     popInfected = 0;
     //testing initial value, set HP for each person to be 10
-    totalHP = population*10;
-    HP = population * 10;
+    totalHP = population*1;
+    HP = population*1;
+    //println(name+" "+population+", totalHP:"+totalHP+", HP:"+HP);
     this.colorCode = colorCode;
     window = loadImage("window.png");
     window.resize(400, 300);
-
+    lastTime = timer.getTime();
     //load coordinates into ArrayList if satisfied colorCode requirement
     for (int i = 0; i<pixels.length; i++) {
       for (int x = 0; x < colorCode.length; x++) { 
@@ -85,6 +90,7 @@ class Region {
     //  //startInfection = false;
     //}else 
     if (clickedOn && !select) {
+
       image(window, 300, 150);
       windowinfo();
       //if mouse over close button, "highlight" the button
@@ -120,7 +126,7 @@ class Region {
       textSize(15);
       text("INFECT", 463, 420);
       infectButton = true;
-    }else{
+    } else {
       fill(203, 203, 203);
       rect(439, 398, 120, 35);
       fill(0, 0, 0);
@@ -171,26 +177,34 @@ class Region {
 
   //update the change in population 
   void populationChange() {
-    // population = (int)(population * Math.pow(E,(growthFactor*timer.getTime()/1000)));
-    int selection = (int)(Math.random()*3);
-    population += selection;
-    HP += selection*10;
-    totalHP += selection * 10;
-    //popAlive += selection;
-
+    now = timer.getTime();
+    if (population <= 0) {
+      population = 0;
+      HP = 0;
+      totalHP = 0;
+    } else if (now - lastTime >= 2 && population > 0) {
+        lastTime = now;
+        // population = (int)(population * Math.pow(E,(growthFactor*timer.getTime()/1000)));
+        int selection = (int)(Math.random()*3);
+        population += selection;
+        HP += selection;
+        totalHP += selection;
+        //popAlive += selection;
+      }
     //update population per pixel
     perSquare = population/area.size();
-    
+
     //update how many people are infected
     popInfected = perSquare * infectionArea;
-    
+
     //update how many people still alive
     //each person has 10 HP for now
     //popAlive = totalHP / 10;
-    
+
     //update how many people dead by subtraction
-    popDead = (HP - totalHP)/10;
-    population -= popDead;
+    popDead = (int)((HP - totalHP)/1);
+    //population -= popDead;
+    population = (int)(totalHP/1);
     if (hovering) {
       text(population, 100, 250);
     }
