@@ -20,6 +20,10 @@ class Coord {
   public int getY() {
     return y;
   }
+  
+  public int getColor(){
+    return get(x,y);
+  }
 
   //compare two Coord objects
   public boolean equals(Coord pair) {
@@ -28,6 +32,10 @@ class Coord {
       return true;
     }
     return false;
+  }
+  
+  public void changeColor(int c){
+    set(x, y, c);
   }
   
   //which country this coordinate is on
@@ -218,6 +226,15 @@ void highlight() {
     high = true;
     hcolor = get(mouseX, mouseY);
   }
+  if(high == true){
+    Region match = matchRegion(mouseX, mouseY);
+    for(Coord c: match.area){
+      if(c.getColor() < -1000000 && c.getColor()==hcolor){
+        c.changeColor(hcolor+500);
+      }
+    }
+  }
+  /*
   if (high==true) {
     for (int i=0; i<1000; i++) {
       for (int j=0; j<600; j++) {
@@ -226,7 +243,8 @@ void highlight() {
         }
       }
     }
-  }
+    
+  }*/
 }
 
 void showInfectPoints() {
