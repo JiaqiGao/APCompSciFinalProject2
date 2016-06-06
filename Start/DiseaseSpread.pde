@@ -1,4 +1,4 @@
-class DiseaseSpread { //<>// //<>// //<>//
+class DiseaseSpread { //<>// //<>// //<>// //<>//
 
   //this variable can be used later, instead of infect an area when user clicks on
   //a location, infect the location when infect is true(user clickes a button etc)
@@ -11,12 +11,18 @@ class DiseaseSpread { //<>// //<>// //<>//
   //timer for when to spread disease
   int lastTime;
   int now;
+  Region startRegion;
+  int initialDifficulty; //scale from 1(easy)-200(hard) it is for virus to spread base on country's medical care
   //which country the infection is in
+  int effectHeat;
+  int effectWater;
+  int effectCold;
   Region country;
 
   public DiseaseSpread(int damage) {
     //next position to infect in where the user picks
     Coord pair = new Coord(mouseX,mouseY);
+    startRegion = matchRegion(mouseX, mouseY);
     waitingList.add(pair);
     lastTime = timer.getTime();
     this.damage = damage;
@@ -25,6 +31,49 @@ class DiseaseSpread { //<>// //<>// //<>//
       country = place; 
      }
     }
+    //initial difficulty for virus to spread 
+    if(startRegion.name.equals("Europe") || startRegion.name.equals("East Asia")){
+      initialDifficulty = 200; 
+    }else if(startRegion.name.equals("North America") || startRegion.name.equals("Greenland")){
+      initialDifficulty = 140; 
+    }else if(startRegion.name.equals("Asia") || startRegion.name.equals("South America")){
+      initialDifficulty = 100; 
+    }else{
+      initialDifficulty = 60;
+    }
+    
+    //Heat resistance effectivity (from 1-5)
+    if(startRegion.name.equals("Greenland")){
+      effectHeat = 1;
+    }else if(startRegion.name.equals("Russia")){
+      effectHeat = 2;
+    }else if(startRegion.name.equals("North America") || startRegion.name.equals("Europe") || startRegion.name.equals("East Asia")){
+      effectHeat = 3;
+    }else if(startRegion.name.equals("South America") || startRegion.name.equals("Africa")){
+      effectHeat = 4;
+    }else{
+      effectHeat = 5;
+    }
+    
+    //Water resistance effectivity (1-5)
+    if(startRegion.name.equals("Indonesia") || startRegion.name.equals("East Asia")){
+      effectWater = 4;
+    }else if(startRegion.name.equals("Australia")){
+      effectWater = 3;
+    }else{
+      effectWater = 1;
+    }
+    
+    //Cold resistance effectivity
+    if(startRegion.name.equals("Greenland") || startRegion.name.equals("Russia")){
+      effectWater = 5;
+    }else if(startRegion.name.equals("Australia") || startRegion.name.equals("Indonesia")){
+      effectWater = 1;
+    }else if(startRegion.name.equals("South America") || startRegion.name.equals("Africa")){
+      effectWater = 2;
+    }else{
+      effectWater = 3;
+    }
   }
 
   void spread() {
@@ -32,7 +81,7 @@ class DiseaseSpread { //<>// //<>// //<>//
     now = timer.getTime();
     //if time to spread
     //for now, time per round of spreading set to 2 sec
-    if (now - lastTime >= 2 && (country.population >0)) {
+    if (now - lastTime >= 2 && (country.population >0) && ((int)(Math.random()*(initialDifficulty-calc("heat")-calc("cold")-calc("water")))==1)){
       lastTime = now;
       ArrayList<Coord> newlyInfected = new ArrayList<Coord>();
       //for each coordinate pairs in waiting list
@@ -94,6 +143,39 @@ class DiseaseSpread { //<>// //<>// //<>//
     }
     //update to change color on map
     map.updatePixels();
+  }
+  
+  int calc(String s){
+    if(s.equals("cold")){
+      int countC=0;
+      for(int i=0; i<5; i++){
+        if(bars.get(2).resistances[0][i]){
+          countC++;
+        }
+      }
+      return countC*effectCold;
+    }
+    
+    if(s.equals("water")){
+      int countW=0;
+      for(int i=0; i<5; i++){
+        if(bars.get(2).resistances[1][i]){
+          countW++;
+        }
+      }
+      return countW*effectWater;
+    }
+    
+    if(s.equals("heat")){
+      int countH=0;
+      for(int i=0; i<5; i++){
+        if(bars.get(2).resistances[2][i]){
+          countH++;
+        }
+      }
+      return countH*effectHeat;
+    }  
+    return 0;
   }
 
   //check if a coord object is in area arraylist

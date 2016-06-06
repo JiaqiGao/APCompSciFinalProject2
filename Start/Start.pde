@@ -1,4 +1,4 @@
-import java.util.*; //<>//
+import java.util.*; //<>// //<>//
 import java.lang.*;
 
 //Class for coordinates on the map
@@ -221,10 +221,10 @@ void draw() {
   //instruction of what player should do next
   if(select){
     fill(142,142,142,150);
-    rect(mouseX+10,mouseY+18,170,13);
+    rect(mouseX+15,mouseY+18,178,13);
     fill(0);
     textSize(10);
-   text("please select a region to infect",mouseX+20,mouseY+28); 
+    text("Select where the virus should start",mouseX+20,mouseY+28); 
   }
 }
 
@@ -234,6 +234,9 @@ void highlight() {
   if (get(mouseX, mouseY) != -1) {
     high = true;
     hcolor = get(mouseX, mouseY);
+  }
+  if(select){
+    high = false;
   }
   if (high == true) {
     Region match = matchRegion(mouseX, mouseY);
@@ -323,7 +326,7 @@ void mouseClicked() {
   for (Region place : world) {
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
-    if (place.hovering && !bars.get(2).visible && !bars.get(3).visible) {
+    if (!select && place.hovering && !bars.get(2).visible && !bars.get(3).visible) {
       place.clickedOn = true;
       clickRegion = place;
     }

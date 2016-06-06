@@ -74,7 +74,7 @@ class Bar{
       if(name.equals("Symptoms")){
         textSize(18);
         int checkspacing = 36;
-        //air
+        //Cold
         fill(60,60,90);
         text("Coughing", 374, 279);
         text("Fever", 374, 279+checkspacing);
@@ -106,9 +106,9 @@ class Bar{
       if(name.equals("Resistances")){
         textSize(18);
         int rectspacing = 20;
-        //air
+        //Cold
         fill(60,60,90);
-        text("Air", 334, 279);
+        text("Cold", 334, 279);
         fill(210, 210, 210);
         if(resistances[0][0]){
           fill(110, 120, 190);
