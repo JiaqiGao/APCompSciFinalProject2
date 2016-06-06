@@ -1,4 +1,4 @@
-class DiseaseSpread { //<>// //<>// //<>// //<>//
+class DiseaseSpread { //<>// //<>// //<>// //<>// //<>//
 
   //this variable can be used later, instead of infect an area when user clicks on
   //a location, infect the location when infect is true(user clickes a button etc)
@@ -33,13 +33,13 @@ class DiseaseSpread { //<>// //<>// //<>// //<>//
     }
     //initial difficulty for virus to spread 
     if(startRegion.name.equals("Europe") || startRegion.name.equals("East Asia")){
-      initialDifficulty = 200; 
-    }else if(startRegion.name.equals("North America") || startRegion.name.equals("Greenland")){
-      initialDifficulty = 140; 
-    }else if(startRegion.name.equals("Asia") || startRegion.name.equals("South America")){
       initialDifficulty = 100; 
+    }else if(startRegion.name.equals("North America") || startRegion.name.equals("Greenland")){
+      initialDifficulty = 90; 
+    }else if(startRegion.name.equals("Asia") || startRegion.name.equals("South America")){
+      initialDifficulty = 80; 
     }else{
-      initialDifficulty = 60;
+      initialDifficulty = 70;
     }
     
     //Heat resistance effectivity (from 1-5)

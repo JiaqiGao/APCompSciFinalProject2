@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>// //<>// //<>//
 import java.lang.*;
 
 //Class for coordinates on the map
@@ -74,7 +74,7 @@ boolean clickedOn = false;
 boolean close = false;
 
 //point system for mutations
-int totalInfect;
+//cheat int totalInfect = 5000;
 int resistanceCost = 45;
 int symptomsCost = 50;
 
