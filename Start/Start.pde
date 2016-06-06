@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>// //<>// //<>//
 import java.lang.*;
 
 //Class for coordinates on the map
@@ -21,6 +21,10 @@ class Coord {
     return y;
   }
 
+  public int getColor() {
+    return get(x, y);
+  }
+
   //compare two Coord objects
   public boolean equals(Coord pair) {
     if (pair.getX() == x &&
@@ -28,6 +32,35 @@ class Coord {
       return true;
     }
     return false;
+  }
+
+  public void changeColor(int c) {
+    set(x, y, c);
+  }
+
+  //which country this coordinate is on
+  public String getCountry() {
+    String countryName = "";
+    for (Region place : world) {
+      if (place.has(new Coord(x, y))) {
+        countryName = place.getName();
+        break;
+      }
+    }
+    return countryName;
+  }
+
+  public Region getRegion() {
+    Region r = world.get(0);
+    //String countryName = "";
+    for (Region place : world) {
+      if (place.has(new Coord(x, y))) {
+        //countryName = place.getName();
+        r = place;
+        break;
+      }
+    }
+    return r;
   }
 }
 
@@ -41,18 +74,19 @@ boolean clickedOn = false;
 boolean close = false;
 
 //point system for mutations
-int totalInfect;
+int totalInfect = 5000;
 int resistanceCost = 45;
 int symptomsCost = 50;
 
 //Infect the first person?
 boolean infectButton = false; 
 boolean started = false;
+boolean openingGift = true;
 
 Region clickRegion; 
 //ArrayLisr which contains all region on the map
 ArrayList<Region> world = new ArrayList<Region>();
-ArrayList<Region> infectedRegions = new ArrayList<Region>();
+//ArrayList<Region> infectedRegions = new ArrayList<Region>();
 ArrayList<Bar> bars = new ArrayList<Bar>();
 Region firstRegion;
 
@@ -60,16 +94,24 @@ Region firstRegion;
 Time timer = new Time();
 
 //disease
+boolean canInfect;
 //create area of infectable
 ArrayList<Coord> infectable = new ArrayList<Coord>();
 ArrayList<Coord> infected = new ArrayList<Coord>();
 //ArrayList of all disease
 ArrayList<DiseaseSpread> allDisease = new ArrayList<DiseaseSpread>();
 
+//check which region mouse is hovering over
+String currentCountry = "";
+
+//whether player had selected the region to infect yet
+boolean select = false;
+
 
 void setup() {
   //window size
   size(1000, 600);
+  frameRate(60);
   //load map as background
   map = loadImage("worldmap.png");
   map.resize(1000, 600);
@@ -77,7 +119,7 @@ void setup() {
   //load logo
   logo = loadImage("sniffles.png");
   logo.resize(100, 100);
-  image(logo, 0, 500);
+  //image(logo, 0, 500);
   window = loadImage("window.png");
   window.resize(400, 300);
 
@@ -93,11 +135,11 @@ void setup() {
 }
 
 void createBars() {
-  Bar progress = new Bar(844, 550, "World Annihilation", 120, 25, true);
+  Bar instructions = new Bar(844, 550, "Instructions", 120, 30, false);
   Bar mutations = new Bar(820, 17, "Mutations", 100, 30, true);
   Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
   Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
-  bars.add(progress);
+  bars.add(instructions);
   bars.add(mutations);
   bars.add(resistances);
   bars.add(symptoms);
@@ -142,18 +184,19 @@ void createRegions() {
 }
 
 void draw() {
-  background(255);
+  //background(255);
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
   showInfectPoints();
   timer.showTime();
-  fill(0);
-  text(mouseX +"  "+ mouseY, 100, 100);
+  //fill(0);
+  //text(mouseX +"  "+ mouseY, 100, 100);
   text(get(mouseX, mouseY), 100, 130);
   //text(pixels[width*mouseY+mouseX], 100, 160);
   for (Region place : world) {
-    text(place.check(), 130, 180);
+    place.check();
+    //text(place.check(), 130, 180);
     //update population : alive, infected, dead
     place.populationChange();
   }
@@ -175,8 +218,14 @@ void draw() {
     infection.spread();
     infection.show();
   }
-  //showing how many different diseases exist
-  //text(allDisease.size(), 100, 430);
+  //instruction of what player should do next
+  if(select){
+    fill(142,142,142,150);
+    rect(mouseX+15,mouseY+18,178,13);
+    fill(0);
+    textSize(10);
+    text("Select where the virus should start",mouseX+20,mouseY+28); 
+  }
 }
 
 void highlight() {
@@ -186,29 +235,23 @@ void highlight() {
     high = true;
     hcolor = get(mouseX, mouseY);
   }
-  if (high==true) {
-    for (int i=0; i<1000; i++) {
-      for (int j=0; j<600; j++) {
-        if (get(i, j)==hcolor && get(i, j)<-1000000) {
-          set(i, j, hcolor+500);
-        }
+  if(select){
+    high = false;
+  }
+  if (high == true) {
+    Region match = matchRegion(mouseX, mouseY);
+    for (Coord c : match.area) {
+      if (c.getColor() < -1000000 && c.getColor()==hcolor) {
+        c.changeColor(hcolor+500);
       }
     }
   }
 }
 
-void showInfectPoints(){
+void showInfectPoints() {
   textSize(25);
   fill(45, 152, 175);
-  //int temp = totalInfect;
-  for(Region r: world){
-    if(r.popInfected < 20){
-      totalInfect += r.popInfected%10;
-    }else{
-      totalInfect += r.popInfected%2;     
-    }
-  }
-  text("XP: "+ totalInfect, 650, 550); 
+  text("XP: "+ totalInfect, 650, 550);
 }
 
 void startScreen() {
@@ -263,178 +306,207 @@ void initiateDeathSequence() {
  }
  */
 void mouseClicked() {
-
-  //when user click on area, infect the location and create a disease
-  //testing initial value of disease set to 2 for now
-  allDisease.add(new DiseaseSpread(2));
+  
+  if(select){
+   allDisease.add(new DiseaseSpread(1));
+   select = false;
+  }
 
   for (Region place : world) {
     //when the mouse is hovering over the area, and mouse is clicked
     //set boolean clickedOn to true so that openWindow will run
-    if (place.hovering && !bars.get(2).visible && !bars.get(3).visible) {
+    if (!select && place.hovering && !bars.get(2).visible && !bars.get(3).visible) {
       place.clickedOn = true;
       clickRegion = place;
     }
+    if (clickRegion != null) {
 
-
-    //if a window is opened, and mouse is clicked on the close button
-    //window will disappear
-    if (place.clickedOn && 
-      mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170) {
-      place.close = true;
-    }
-    if (started==false && 
-      mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170) {
-      started = true;
-    }
-    //if click x button
-    if ((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
-      mouseY >= 155 && mouseY <= 170) {
-      bars.get(1).mutationWindow = false;
-      bars.get(2).visible = false;
-      bars.get(2).mutationWindow = false;
-      bars.get(3).visible = false;
-      bars.get(3).mutationWindow = false;
-    }
-    //if click mutations button
-    if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
-      mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
-      bars.get(1).mutationWindow = true;
-      bars.get(2).visible = true;
-      bars.get(3).visible = true;
-      //bars.get(3).
-    }
-    //if click resistances button 
-    if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
-      mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l && !bars.get(3).mutationWindow) {
-      //bars.get(1).visible = false;
-      bars.get(1).mutationWindow = false;
-      bars.get(3).visible = false;
-      bars.get(2).mutationWindow = true;
-      //bars.get(3).
-    }
-    
-    //checking boxes in symptoms window
-    if(bars.get(3).mutationWindow){
-      //344, 264+checkspacing
-      if(mouseX >= 344 && mouseX <= 364 && totalInfect >= symptomsCost){
-        if(!bars.get(3).checks[0] && mouseY >= 264 && mouseY <= 282){
-          bars.get(3).checks[0] = true;
-          totalInfect -= symptomsCost;
-        }
-        if(!bars.get(3).checks[1] && mouseY >= 300 && mouseY <= 318){
-          bars.get(3).checks[1] = true;
-          totalInfect -= symptomsCost;
-        }
-        if(!bars.get(3).checks[2] && mouseY >= 336 && mouseY <= 354){
-          bars.get(3).checks[2] = true;
-          totalInfect -= symptomsCost;
-        }
-        if(!bars.get(3).checks[3] && mouseY >= 372 && mouseY <= 390){
-          bars.get(3).checks[3] = true;
-          totalInfect -= symptomsCost;
-        }
+      //if a window is opened, and mouse is clicked on the close button
+      //window will disappear
+      if (place.clickedOn && 
+        mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        place.close = true;
       }
-    }
-    
-    //if click symptoms button
-    if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
-      mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
-      //bars.get(1).visible = false;
-      bars.get(1).mutationWindow = false;
-      bars.get(2).visible = false;
-      //bars.get(3).visible = false;
-      bars.get(2).mutationWindow = false;
-      bars.get(3).mutationWindow = true;
-      //bars.get(3).
-    }
-    //resistances
-    if(bars.get(2).mutationWindow){
-      //air
-      if(mouseY >= 257 && mouseY <= 287 && totalInfect >= resistanceCost){
-        if(!bars.get(2).resistances[0][0] && mouseX >= 409 && mouseX <= 419){
-          bars.get(2).resistances[0][0] = true;
-          totalInfect -= resistanceCost;
-        }
-        if(!bars.get(2).resistances[0][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[0][0]){
-          bars.get(2).resistances[0][1] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[0][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1]){
-          bars.get(2).resistances[0][2] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[0][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2]){
-          bars.get(2).resistances[0][3] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[0][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2] && bars.get(2).resistances[0][3]){
-          bars.get(2).resistances[0][4] = true;
-          totalInfect -= resistanceCost;
-        }  
+      if (started==false && 
+        mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        started = true;
       }
-        
-      //water
-      if(mouseY >= 307 && mouseY <= 337){
-        if(!bars.get(2).resistances[1][0] && mouseX >= 409 && mouseX <= 419){
-          bars.get(2).resistances[1][0] = true;
-          totalInfect -= resistanceCost;
-        }
-        if(!bars.get(2).resistances[1][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[1][0]){
-          bars.get(2).resistances[1][1] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[1][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1]){
-          bars.get(2).resistances[1][2] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[1][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2]){
-          bars.get(2).resistances[1][3] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[1][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2] && bars.get(2).resistances[1][3]){
-          bars.get(2).resistances[1][4] = true;
-          totalInfect -= resistanceCost;
-        }  
+      //if click x button
+      if ((bars.get(0).visible == true || bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        bars.get(0).visible = false;
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        bars.get(2).mutationWindow = false;
+        bars.get(3).visible = false;
+        bars.get(3).mutationWindow = false;
       }
       
-      //heat
-      if(mouseY >= 357 && mouseY <= 387){
-        if(!bars.get(2).resistances[2][0] && mouseX >= 409 && mouseX <= 419){
-          bars.get(2).resistances[2][0] = true;
-          totalInfect -= resistanceCost;
-        }
-        if(!bars.get(2).resistances[2][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[2][0]){
-          bars.get(2).resistances[2][1] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[2][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1]){
-          bars.get(2).resistances[2][2] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[2][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2]){
-          bars.get(2).resistances[2][3] = true;
-          totalInfect -= resistanceCost;
-        }  
-        if(!bars.get(2).resistances[2][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2] && bars.get(2).resistances[2][3]){
-          bars.get(2).resistances[2][4] = true;
-          totalInfect -= resistanceCost;
-        }  
+      //if click instructions button
+      if (mouseX >= bars.get(0).xcor && mouseX <= bars.get(0).xcor+bars.get(0).w &&
+        mouseY >= bars.get(0).ycor && mouseY <= bars.get(0).ycor+bars.get(0).l) {
+        bars.get(0).visible = true;
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        bars.get(3).visible = false;
+        //bars.get(3).
       }
       
-    }
-    //437, 398, 100, 35
-    if (infectButton && (mouseX >= 437 && mouseX <= 537 &&
-      mouseY >= 398 && mouseY <= 433)) {
-      infectedRegions.add(clickRegion);
-      clickRegion.popInfected += 1;
-      clickRegion.startInfection = true;
+      //if click mutations button
+      if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
+        mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+        bars.get(0).visible = false;
+        bars.get(1).mutationWindow = true;
+        bars.get(2).visible = true;
+        bars.get(3).visible = true;
+        //bars.get(3).
+      }
+      
+      //if click resistances button 
+      if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
+        mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l && !bars.get(3).mutationWindow) {
+        //bars.get(1).visible = false;
+        bars.get(1).mutationWindow = false;
+        bars.get(3).visible = false;
+        bars.get(2).mutationWindow = true;
+        //bars.get(3).
+      }
 
-      infectButton=false;
-      clickRegion.close = true;
-      //WAIT IM WORKING HERE
+      //checking boxes in symptoms window
+      if (bars.get(3).mutationWindow) {
+        //344, 264+checkspacing
+        if (mouseX >= 344 && mouseX <= 364 && totalInfect >= symptomsCost) {
+          if (!bars.get(3).checks[0] && mouseY >= 264 && mouseY <= 282) {
+            bars.get(3).checks[0] = true;
+            totalInfect -= symptomsCost;
+          }
+          if (!bars.get(3).checks[1] && mouseY >= 300 && mouseY <= 318) {
+            bars.get(3).checks[1] = true;
+            totalInfect -= symptomsCost;
+          }
+          if (!bars.get(3).checks[2] && mouseY >= 336 && mouseY <= 354) {
+            bars.get(3).checks[2] = true;
+            totalInfect -= symptomsCost;
+          }
+          if (!bars.get(3).checks[3] && mouseY >= 372 && mouseY <= 390) {
+            bars.get(3).checks[3] = true;
+            totalInfect -= symptomsCost;
+          }
+        }
+      }
+
+      //if click symptoms button
+      if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
+        mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
+        //bars.get(1).visible = false;
+        bars.get(0).visible = false;
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        //bars.get(3).visible = false;
+        bars.get(2).mutationWindow = false;
+        bars.get(3).mutationWindow = true;
+        //bars.get(3).
+      }
+      
+      //resistances
+      if (bars.get(2).mutationWindow) {
+        //air
+        if (mouseY >= 257 && mouseY <= 287 && totalInfect >= resistanceCost) {
+          if (!bars.get(2).resistances[0][0] && mouseX >= 409 && mouseX <= 419) {
+            bars.get(2).resistances[0][0] = true;
+            totalInfect -= resistanceCost;
+          }
+          if (!bars.get(2).resistances[0][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[0][0]) {
+            bars.get(2).resistances[0][1] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[0][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1]) {
+            bars.get(2).resistances[0][2] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[0][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2]) {
+            bars.get(2).resistances[0][3] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[0][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[0][0] && bars.get(2).resistances[0][1] && bars.get(2).resistances[0][2] && bars.get(2).resistances[0][3]) {
+            bars.get(2).resistances[0][4] = true;
+            totalInfect -= resistanceCost;
+          }
+        }
+
+        //water
+        if (mouseY >= 307 && mouseY <= 337) {
+          if (!bars.get(2).resistances[1][0] && mouseX >= 409 && mouseX <= 419) {
+            bars.get(2).resistances[1][0] = true;
+            totalInfect -= resistanceCost;
+          }
+          if (!bars.get(2).resistances[1][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[1][0]) {
+            bars.get(2).resistances[1][1] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[1][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1]) {
+            bars.get(2).resistances[1][2] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[1][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2]) {
+            bars.get(2).resistances[1][3] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[1][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[1][0] && bars.get(2).resistances[1][1] && bars.get(2).resistances[1][2] && bars.get(2).resistances[1][3]) {
+            bars.get(2).resistances[1][4] = true;
+            totalInfect -= resistanceCost;
+          }
+        }
+
+        //heat
+        if (mouseY >= 357 && mouseY <= 387) {
+          if (!bars.get(2).resistances[2][0] && mouseX >= 409 && mouseX <= 419) {
+            bars.get(2).resistances[2][0] = true;
+            totalInfect -= resistanceCost;
+          }
+          if (!bars.get(2).resistances[2][1] && mouseX >= 429 && mouseX <= 439 && bars.get(2).resistances[2][0]) {
+            bars.get(2).resistances[2][1] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[2][2] && mouseX >= 449 && mouseX <= 459 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1]) {
+            bars.get(2).resistances[2][2] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[2][3] && mouseX >= 469 && mouseX <= 479 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2]) {
+            bars.get(2).resistances[2][3] = true;
+            totalInfect -= resistanceCost;
+          }  
+          if (!bars.get(2).resistances[2][4] && mouseX >= 489 && mouseX <= 499 && bars.get(2).resistances[2][0] && bars.get(2).resistances[2][1] && bars.get(2).resistances[2][2] && bars.get(2).resistances[2][3]) {
+            bars.get(2).resistances[2][4] = true;
+            totalInfect -= resistanceCost;
+          }
+        }
+      }
+      //437, 398, 100, 35
+      if (infectButton && (mouseX >= 437 && mouseX <= 537 &&
+        mouseY >= 398 && mouseY <= 433)) {
+        //infectedRegions.add(clickRegion);
+        // clickRegion.popInfected += 1;
+        //allDisease.add(new DiseaseSpread(1));
+        clickRegion.startInfection = true;
+        if (openingGift) {
+          openingGift = false;
+        }else{
+         totalInfect -= 1000; 
+        }
+        infectButton=false;
+        select = true;
+        //WAIT IM WORKING HERE
+      }
+
+      //when user click on area, infect the location and create a disease
+      //testing initial value of disease set to 2 for now
+      //if (clickRegion.startInfection) {
+      //  allDisease.add(new DiseaseSpread(1));
+      //  //clickRegion.startInfection = false;
+      //}
     }
   }
 }

@@ -74,7 +74,7 @@ class Bar{
       if(name.equals("Symptoms")){
         textSize(18);
         int checkspacing = 36;
-        //air
+        //Cold
         fill(60,60,90);
         text("Coughing", 374, 279);
         text("Fever", 374, 279+checkspacing);
@@ -106,9 +106,9 @@ class Bar{
       if(name.equals("Resistances")){
         textSize(18);
         int rectspacing = 20;
-        //air
+        //Cold
         fill(60,60,90);
-        text("Air", 334, 279);
+        text("Cold", 334, 279);
         fill(210, 210, 210);
         if(resistances[0][0]){
           fill(110, 120, 190);
@@ -197,6 +197,7 @@ class Bar{
   void openWindow() {
     if(visible){
       image(window, 300, 150);
+      
       //windowinfo();
     }
     //if mouse over close button, "highlight" the button
@@ -212,47 +213,22 @@ class Bar{
   }
   
   void createBar(){
-    noFill();
-    stroke(0, 0, 0);
-    rect(xcor,ycor, w, l);
-    if(deadCalc()>10){
-      fill(197, 245, 135);
+    if (mouseX >= xcor && mouseX <= xcor+w &&
+            mouseY >= ycor && mouseY <= ycor+l) {
+            fill(37, 140, 206, 150);
+            noStroke();
+            rect(xcor, ycor, w, l);
     }else{
-      fill(218, 255, 168);
+      fill(197, 245, 135);
+      rect(xcor,ycor, w, l);
+      noStroke();
     }
-    if(deadCalc()>30){
-      fill(192, 250, 115);
-    }
-    if(deadCalc()>50){
-      fill(172, 243, 80);
-    }
-    if(deadCalc()>75){
-      fill(142, 2016, 44);
-    }
-    if(deadCalc()>90){
-      fill(125, 195, 34);
-    }
-    noStroke();
-    rect(xcor+5,ycor+5, deadCalc(), l-10);
-    textSize(10);
-    fill(100, 145, 41);
-    text(name, xcor, ycor+37);
+
+    textSize(16);
+    fill(37, 14, 206, 150);
+    text(name, xcor+15, ycor+20);
+    openWindow();
   }
   
-  //calculates progress and changes length of progress bar
-  float deadCalc(){
-    int dead = 0;
-    int infected = 0;
-    int worldPop = 0;
-    for(Region r : world){
-      dead += r.popDead;
-      infected += r.popInfected;
-      worldPop += r.population; 
-    }
-    //test
-    dead = 10000;
-    infected = 152222222;
-    return (float)((float)(dead + (float)(infected/2))/worldPop)*full;
-  }
   
 }
