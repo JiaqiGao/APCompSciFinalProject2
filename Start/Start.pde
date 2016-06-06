@@ -310,22 +310,7 @@ public Region matchRegion(int x, int y) {
   }
   return world.get(0);
 }
-/*
-void initiateDeathSequence() {
- //int firstPixel;
- while (get(mouseX, mouseY) == -1) {
- firstRegion = matchRegion(mouseX, mouseY);
- }
- System.out.println(firstRegion);
- first = true;
- if (first==true) {
- //firstPixel = firstRegion.coordinates.get((int)(Math.random()*firstRegion.coordinates.size()));
- //firstRegion.virus(firstPixel);
- //System.out.println(firstPixel);
- //first = false;
- }
- }
- */
+
 void mouseClicked() {
   
   //if it's time for player to select a region for infection
