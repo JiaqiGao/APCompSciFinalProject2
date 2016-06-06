@@ -74,7 +74,7 @@ boolean clickedOn = false;
 boolean close = false;
 
 //point system for mutations
-//cheat int totalInfect = 5000;
+int totalInfect = 0;
 int resistanceCost = 45;
 int symptomsCost = 50;
 
@@ -100,6 +100,10 @@ ArrayList<Coord> infectable = new ArrayList<Coord>();
 ArrayList<Coord> infected = new ArrayList<Coord>();
 //ArrayList of all disease
 ArrayList<DiseaseSpread> allDisease = new ArrayList<DiseaseSpread>();
+//damage for disease
+int damage;
+//cost of spreading disease
+int diseaseCost;
 
 //check which region mouse is hovering over
 String currentCountry = "";
@@ -132,6 +136,10 @@ void setup() {
 
   //timer setup
   timer.runTime();
+  
+  //setting initial value for cost and damage of disease
+  diseaseCost = 0;
+  damage = 1;
 }
 
 void createBars() {
@@ -262,7 +270,9 @@ void highlight() {
 void showInfectPoints() {
   textSize(25);
   fill(45, 152, 175);
+  //text("Damage: "+ damage, 650, 520);
   text("XP: "+ totalInfect, 650, 550);
+  text("Cost: "+ diseaseCost, 650, 580);
 }
 
 void startScreen() {
@@ -318,8 +328,12 @@ void initiateDeathSequence() {
  */
 void mouseClicked() {
   
+  //if it's time for player to select a region for infection
   if(select){
+    //create new disease
    allDisease.add(new DiseaseSpread(1));
+   //increse cost for starting a disease
+   diseaseCost = (int)(diseaseCost*1.5);
    select = false;
   }
 
@@ -377,18 +391,26 @@ void mouseClicked() {
         if (mouseX >= 344 && mouseX <= 364 && totalInfect >= symptomsCost) {
           if (!bars.get(3).checks[0] && mouseY >= 264 && mouseY <= 282) {
             bars.get(3).checks[0] = true;
+            damage++;
+            diseaseCost += 1000;
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[1] && mouseY >= 300 && mouseY <= 318) {
             bars.get(3).checks[1] = true;
+            damage++;
+            diseaseCost += 1000;
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[2] && mouseY >= 336 && mouseY <= 354) {
             bars.get(3).checks[2] = true;
+            damage++;
+            diseaseCost += 1000;
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[3] && mouseY >= 372 && mouseY <= 390) {
             bars.get(3).checks[3] = true;
+            damage++;
+            diseaseCost += 1000;
             totalInfect -= symptomsCost;
           }
         }
@@ -488,8 +510,9 @@ void mouseClicked() {
         clickRegion.startInfection = true;
         if (openingGift) {
           openingGift = false;
+          diseaseCost = 1000;
         }else{
-         totalInfect -= 1000; 
+         totalInfect -= diseaseCost; 
         }
         infectButton=false;
         select = true;

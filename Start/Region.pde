@@ -119,7 +119,7 @@ class Region {
     text("Population Dead: " + newDead, 330, 210+(3*linespacing));
     //if (first) {
 
-    if (openingGift || totalInfect >= 1100) {
+    if (openingGift || totalInfect >= diseaseCost) {
       fill(225, 60, 49);
       rect(437, 398, 100, 35);
       fill(255, 255, 255);

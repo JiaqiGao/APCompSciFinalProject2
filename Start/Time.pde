@@ -2,8 +2,8 @@ class Time {
 
   //factor which determines how much faster
   //the time in the game pass
-  int factor = 16;
-  
+  int factor = 1;
+
   //keep track of milliseconds passed in actual life
   int start;
   int end;
@@ -46,29 +46,26 @@ class Time {
     time = getMilli()/1000 * factor;
     return (int)time;
   }
-  
-  void convert(){
+
+  void convert() {
     getTime();
     minute = (time/60) % 60;
     hour = (time/(60*60)) % 24;
   }
- 
-  void showTime(){
-   convert();
-   fill(0);
-   textSize(25);
-   String hr, min;
-   if(hour/10 >= 1){
-     hr = ""+hour;
-   }else{
-    hr = "0"+hour; 
-   }
-   if(minute/10 >= 1){
-    min = ""+minute; 
-   }else{
-    min = "0"+minute; 
-   }
-   text(hr + " : " + min, 60,30);
+
+  void showTime() {
+    fill(0);
+    textSize(20);
+    String day = "";
+    if(getTime() == 1){
+     day = "1st"; 
+    }else if(getTime() == 2){
+     day = "2nd"; 
+    }else if(getTime() == 3){
+     day = "3rd"; 
+    }else{
+     day = getTime()+"th"; 
+    }
+    text(day+" Day", 60, 30);
   }
-  
 }
