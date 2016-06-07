@@ -251,7 +251,7 @@ class Bar{
       copy = copy/10;
       digits++;
     }
-    text("XP: "+totalInfect, xcor+39-(2*digits), ycor+20);
+    text("XP: "+totalInfect, xcor+39-(3*digits), ycor+20);
     openWindow();
   }
   
