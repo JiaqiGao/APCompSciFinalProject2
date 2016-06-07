@@ -197,6 +197,7 @@ class Bar{
   void openWindow() {
     if(visible){
       image(window, 300, 150);
+      
       //windowinfo();
     }
     //if mouse over close button, "highlight" the button
@@ -212,54 +213,22 @@ class Bar{
   }
   
   void createBar(){
-    noFill();
-    stroke(0, 0, 0);
-    rect(xcor,ycor, w, l);
-    if(deadCalc()>10){
-      fill(197, 245, 135);
+    if (mouseX >= xcor && mouseX <= xcor+w &&
+            mouseY >= ycor && mouseY <= ycor+l) {
+            fill(37, 140, 206, 150);
+            noStroke();
+            rect(xcor, ycor, w, l);
     }else{
-      fill(218, 255, 168);
+      fill(197, 245, 135);
+      rect(xcor,ycor, w, l);
+      noStroke();
     }
-    if(deadCalc()>30){
-      fill(192, 250, 115);
-    }
-    if(deadCalc()>50){
-      fill(172, 243, 80);
-    }
-    if(deadCalc()>75){
-      fill(142, 2016, 44);
-    }
-    if(deadCalc()>90){
-      fill(125, 195, 34);
-    }
-    noStroke();
-    rect(xcor+5,ycor+5, deadCalc(), l-10);
-    textSize(10);
-    fill(100, 145, 41);
-    text(name, xcor, ycor+37);
+
+    textSize(16);
+    fill(37, 14, 206, 150);
+    text(name, xcor+15, ycor+20);
+    openWindow();
   }
   
-  //calculates progress and changes length of progress bar
-  float deadCalc(){
-    
-    float green = 0;
-    float totalInfectCopy = totalInfect;
-    //int red = 0;
-    while(totalInfectCopy > 0){
-      green+=0.1;
-      totalInfectCopy -= 1000000;
-    }
-    /*
-    for(int i=0; i<1000; i++){
-      for(int j=0; j<800; j++){
-        if(get(i,j) < -7000000 && get(i,j) > -16000000){
-          red++;
-        }
-        
-      }
-    }
-    */
-    return ((green)+0.01)*full;
-  }
   
 }

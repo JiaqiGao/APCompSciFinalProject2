@@ -74,7 +74,11 @@ boolean clickedOn = false;
 boolean close = false;
 
 //point system for mutations
+<<<<<<< HEAD
 int totalInfect = 0;
+=======
+int totalInfect = 5000;
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
 int resistanceCost = 45;
 int symptomsCost = 50;
 
@@ -100,10 +104,13 @@ ArrayList<Coord> infectable = new ArrayList<Coord>();
 ArrayList<Coord> infected = new ArrayList<Coord>();
 //ArrayList of all disease
 ArrayList<DiseaseSpread> allDisease = new ArrayList<DiseaseSpread>();
+<<<<<<< HEAD
 //damage for disease
 int damage;
 //cost of spreading disease
 int diseaseCost;
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
 
 //check which region mouse is hovering over
 String currentCountry = "";
@@ -136,6 +143,7 @@ void setup() {
 
   //timer setup
   timer.runTime();
+<<<<<<< HEAD
   
   //setting initial value for cost and damage of disease
   diseaseCost = 0;
@@ -148,6 +156,16 @@ void createBars() {
   Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
   Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
   bars.add(progress);
+=======
+}
+
+void createBars() {
+  Bar instructions = new Bar(844, 550, "Instructions", 120, 30, false);
+  Bar mutations = new Bar(820, 17, "Mutations", 100, 30, true);
+  Bar resistances = new Bar(337, 309, "Resistances", 120, 35, false);
+  Bar symptoms = new Bar(534, 309, "Symptoms", 120, 35, false);
+  bars.add(instructions);
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
   bars.add(mutations);
   bars.add(resistances);
   bars.add(symptoms);
@@ -254,6 +272,7 @@ void highlight() {
       }
     }
   }
+<<<<<<< HEAD
   /*
   if (high==true) {
    for (int i=0; i<1000; i++) {
@@ -265,14 +284,20 @@ void highlight() {
    }
    
    }*/
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
 }
 
 void showInfectPoints() {
   textSize(25);
   fill(45, 152, 175);
+<<<<<<< HEAD
   //text("Damage: "+ damage, 650, 520);
   text("XP: "+ totalInfect, 650, 550);
   text("Cost: "+ diseaseCost, 650, 580);
+=======
+  text("XP: "+ totalInfect, 650, 550);
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
 }
 
 void startScreen() {
@@ -310,6 +335,7 @@ public Region matchRegion(int x, int y) {
   }
   return world.get(0);
 }
+<<<<<<< HEAD
 
 void mouseClicked() {
   
@@ -319,6 +345,28 @@ void mouseClicked() {
    allDisease.add(new DiseaseSpread(1));
    //increse cost for starting a disease
    diseaseCost = (int)(diseaseCost*1.5);
+=======
+/*
+void initiateDeathSequence() {
+ //int firstPixel;
+ while (get(mouseX, mouseY) == -1) {
+ firstRegion = matchRegion(mouseX, mouseY);
+ }
+ System.out.println(firstRegion);
+ first = true;
+ if (first==true) {
+ //firstPixel = firstRegion.coordinates.get((int)(Math.random()*firstRegion.coordinates.size()));
+ //firstRegion.virus(firstPixel);
+ //System.out.println(firstPixel);
+ //first = false;
+ }
+ }
+ */
+void mouseClicked() {
+  
+  if(select){
+   allDisease.add(new DiseaseSpread(1));
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
    select = false;
   }
 
@@ -344,22 +392,50 @@ void mouseClicked() {
         started = true;
       }
       //if click x button
+<<<<<<< HEAD
       if ((bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
         mouseY >= 155 && mouseY <= 170) {
+=======
+      if ((bars.get(0).visible == true || bars.get(1).mutationWindow == true || bars.get(2).mutationWindow == true || bars.get(3).mutationWindow == true ) && mouseX >= 675 && mouseX <= 690 &&
+        mouseY >= 155 && mouseY <= 170) {
+        bars.get(0).visible = false;
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
         bars.get(1).mutationWindow = false;
         bars.get(2).visible = false;
         bars.get(2).mutationWindow = false;
         bars.get(3).visible = false;
         bars.get(3).mutationWindow = false;
       }
+<<<<<<< HEAD
       //if click mutations button
       if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
         mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+=======
+      
+      //if click instructions button
+      if (mouseX >= bars.get(0).xcor && mouseX <= bars.get(0).xcor+bars.get(0).w &&
+        mouseY >= bars.get(0).ycor && mouseY <= bars.get(0).ycor+bars.get(0).l) {
+        bars.get(0).visible = true;
+        bars.get(1).mutationWindow = false;
+        bars.get(2).visible = false;
+        bars.get(3).visible = false;
+        //bars.get(3).
+      }
+      
+      //if click mutations button
+      if (mouseX >= bars.get(1).xcor && mouseX <= bars.get(1).xcor+bars.get(1).w &&
+        mouseY >= bars.get(1).ycor && mouseY <= bars.get(1).ycor+bars.get(1).l) {
+        bars.get(0).visible = false;
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
         bars.get(1).mutationWindow = true;
         bars.get(2).visible = true;
         bars.get(3).visible = true;
         //bars.get(3).
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
       //if click resistances button 
       if (mouseX >= bars.get(2).xcor && mouseX <= bars.get(2).xcor+bars.get(2).w &&
         mouseY >= bars.get(2).ycor && mouseY <= bars.get(2).ycor+bars.get(2).l && !bars.get(3).mutationWindow) {
@@ -376,26 +452,38 @@ void mouseClicked() {
         if (mouseX >= 344 && mouseX <= 364 && totalInfect >= symptomsCost) {
           if (!bars.get(3).checks[0] && mouseY >= 264 && mouseY <= 282) {
             bars.get(3).checks[0] = true;
+<<<<<<< HEAD
             damage++;
             diseaseCost += 1000;
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[1] && mouseY >= 300 && mouseY <= 318) {
             bars.get(3).checks[1] = true;
+<<<<<<< HEAD
             damage++;
             diseaseCost += 1000;
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[2] && mouseY >= 336 && mouseY <= 354) {
             bars.get(3).checks[2] = true;
+<<<<<<< HEAD
             damage++;
             diseaseCost += 1000;
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
             totalInfect -= symptomsCost;
           }
           if (!bars.get(3).checks[3] && mouseY >= 372 && mouseY <= 390) {
             bars.get(3).checks[3] = true;
+<<<<<<< HEAD
             damage++;
             diseaseCost += 1000;
+=======
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
             totalInfect -= symptomsCost;
           }
         }
@@ -405,6 +493,10 @@ void mouseClicked() {
       if (mouseX >= bars.get(3).xcor && mouseX <= bars.get(3).xcor+bars.get(3).w &&
         mouseY >= bars.get(3).ycor && mouseY <= bars.get(3).ycor+bars.get(3).l) {
         //bars.get(1).visible = false;
+<<<<<<< HEAD
+=======
+        bars.get(0).visible = false;
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
         bars.get(1).mutationWindow = false;
         bars.get(2).visible = false;
         //bars.get(3).visible = false;
@@ -412,6 +504,10 @@ void mouseClicked() {
         bars.get(3).mutationWindow = true;
         //bars.get(3).
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
       //resistances
       if (bars.get(2).mutationWindow) {
         //air
@@ -495,9 +591,14 @@ void mouseClicked() {
         clickRegion.startInfection = true;
         if (openingGift) {
           openingGift = false;
+<<<<<<< HEAD
           diseaseCost = 1000;
         }else{
          totalInfect -= diseaseCost; 
+=======
+        }else{
+         totalInfect -= 1000; 
+>>>>>>> c1fea4ca513eb6a998ecce30e0919cd70dee3fc4
         }
         infectButton=false;
         select = true;
