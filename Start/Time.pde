@@ -44,6 +44,9 @@ class Time {
   //faster/slower depending on the factor
   int getTime() {
     time = getMilli()/1000 * factor;
+    if(!started){
+      time = 0;
+    }
     return (int)time;
   }
 

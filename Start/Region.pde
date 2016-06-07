@@ -130,8 +130,8 @@ class Region {
       fill(203, 203, 203);
       rect(439, 398, 120, 35);
       fill(0, 0, 0);
-      textSize(10);
-      text("NOT ENOUGH POINTS", 445, 420);
+      textSize(11);
+      text("REQUIRE "+diseaseCost+" XP", 450, 420);
       infectButton = false;
     }
   }

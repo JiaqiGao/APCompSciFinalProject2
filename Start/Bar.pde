@@ -197,7 +197,17 @@ class Bar{
   void openWindow() {
     if(visible){
       image(window, 300, 150);
-      
+      //stroke(0,0,0);
+      fill(63, 63, 63);
+      textSize(18);
+      int linespacing = 20;
+      text("XP Guide", 300+(160-((name.length())/2)), 225);
+      textSize(13);
+      fill(100, 100, 100);
+      text("Unlock mutations using XP to strengthen the virus. \nThe increasing the resistance towards heat, cold, and \nwater will hasten the spread of the virus, but the \neffectivity depends on the region. \nSymptoms decrease the rate of recovery for the infectees. \nYou may also spend XP on spreading the virus to \nother regions.", 325, 240+linespacing);
+      textSize(12);
+      fill(180, 180, 180);
+      text("XP isn't an acronym; it's the face of an infected person", 333, 430);
       //windowinfo();
     }
     //if mouse over close button, "highlight" the button
@@ -226,7 +236,13 @@ class Bar{
 
     textSize(16);
     fill(37, 14, 206, 150);
-    text(name, xcor+15, ycor+20);
+    int digits = 0;
+    int copy = totalInfect;
+    while(copy>10){
+      copy = copy/10;
+      digits++;
+    }
+    text("XP: "+totalInfect, xcor+39-(2*digits), ycor+20);
     openWindow();
   }
   

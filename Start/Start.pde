@@ -197,7 +197,6 @@ void draw() {
   image(map, 0, 0);
   image(logo, 0, 500);
   loadPixels(); 
-  showInfectPoints();
   timer.showTime();
   //fill(0);
   //text(mouseX +"  "+ mouseY, 100, 100);
@@ -257,14 +256,6 @@ void highlight() {
   }
 }
 
-void showInfectPoints() {
-  textSize(25);
-  fill(45, 152, 175);
-  //text("Damage: "+ damage, 650, 520);
-  text("XP: "+ totalInfect, 650, 550);
-  text("Cost: "+ diseaseCost, 650, 580);
-}
-
 void startScreen() {
   window = loadImage("window.png");
   window.resize(400, 300);
@@ -279,7 +270,7 @@ void startText() {
   text("YOUR MISSION IS TO DESTROY HUMANITY.", 335, 215); 
   fill(61, 15, 15);
   textSize(14);
-  text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect the region you would like your first victim \nto come from. \nAs more people get infected, you may choose \nhow you would like to mutate your virus as \nmore people get infected. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
+  text("Equipped with the deadly Sniffles virus, kill as \nmany people as possible. \nSelect a region to check on your progress or to \ninfect the area. \nAs more people get infected and die, you gain \npoints (XP) which can be used to mutate the virus \nor to spread it to another region. \nSelect your mutations strategically as their effects \nwill differ based on the location of your victims.", 332, 215+linespacing);
 }
 
 void closeWindow() {
