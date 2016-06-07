@@ -205,8 +205,8 @@ class Region {
     popDead = (int)((HP - totalHP)/1);
     //population -= popDead;
     population = (int)(totalHP/1);
-    if (hovering) {
-      text(population, 100, 250);
-    }
+    //if (hovering) {
+    //  text(population, 100, 250);
+    //}
   }
 }
