@@ -77,6 +77,10 @@ class Bar{
         //Cold
         fill(60,60,90);
         text("Coughing", 374, 279);
+        textSize(15);
+        fill(100, 100, 100);
+        text("Unlocking a symptom \nrequires "+symptomsCost+" XP", 420+(2*checkspacing), 279);
+        textSize(18);
         text("Fever", 374, 279+checkspacing);
         text("Paralysis", 374, 279+(2*checkspacing));
         text("Amnesia", 374, 279+(3*checkspacing));
@@ -109,6 +113,10 @@ class Bar{
         //Cold
         fill(60,60,90);
         text("Cold", 334, 279);
+        textSize(15);
+        fill(100, 100, 100);
+        text("Unlocking a level of \nresistance requires \n"+resistanceCost+" XP", 420+(5*rectspacing), 279);
+        textSize(18);
         fill(210, 210, 210);
         if(resistances[0][0]){
           fill(110, 120, 190);
@@ -190,6 +198,7 @@ class Bar{
           fill(110, 120, 190);
         }
         rect(409+(4*rectspacing), 257+(2*linespacing), 10, 30);
+        
       }
     }
   }
