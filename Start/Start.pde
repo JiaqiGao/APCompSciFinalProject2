@@ -95,6 +95,8 @@ Time timer = new Time();
 
 //disease
 boolean canInfect;
+//endgame
+boolean endGameWindow = true;
 //create area of infectable
 ArrayList<Coord> infectable = new ArrayList<Coord>();
 ArrayList<Coord> infected = new ArrayList<Coord>();
@@ -123,7 +125,7 @@ void setup() {
   //load logo
   logo = loadImage("sniffles.png");
   logo.resize(100, 100);
-  //image(logo, 0, 500);
+  //image(window, 400, 300);
   window = loadImage("window.png");
   window.resize(400, 300);
 
@@ -234,6 +236,17 @@ void draw() {
     textSize(10);
     text("Select where the virus should start", mouseX+20, mouseY+28);
   }
+  endgame();
+}
+
+void endgame(){
+  //if(endGameWindow){
+  if(infected.size() > 2000000000 && endGameWindow){
+    image(window, 300, 150);
+    fill(140, 90, 110);
+    textSize(15);
+    text("              Congratulations!!! \n\nYou've infected like an insane amount \nof people! At this point, it's very inevitable \nthat you will win and we really need \nan end screen so here it is!!!", 360, 250);
+  }
 }
 
 void highlight() {
@@ -333,6 +346,7 @@ void mouseClicked() {
         bars.get(2).mutationWindow = false;
         bars.get(3).visible = false;
         bars.get(3).mutationWindow = false;
+        endGameWindow = false;
       }
 
       //if click instructions button
