@@ -131,7 +131,7 @@ class Region {
       rect(439, 398, 120, 35);
       fill(0, 0, 0);
       textSize(11);
-      text("REQUIRE "+diseaseCost+" XP", 450, 420);
+      text("REQUIRES "+diseaseCost+" XP", 450, 420);
       infectButton = false;
     }
   }
