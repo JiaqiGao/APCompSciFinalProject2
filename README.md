@@ -1,6 +1,6 @@
 # AP Computer Science II Final Project 2
 
-Sniffles: An epidemic-simulating game
+## Sniffles: An epidemic-simulating game
 =====================================
 > Created by Jiaqi Gao and Yuki Chen
 
